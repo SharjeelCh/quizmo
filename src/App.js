@@ -1,7 +1,13 @@
-export default function App() {
+import React from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import Navigation from './Screens/Navigation'
+
+function App() {
   return (
-    <h1 className="text-5xl font-bold underline">
-      Hello world!
-    </h1>
+    <Router>
+      <Navigation/>
+    </Router>
   )
 }
+
+export default App
