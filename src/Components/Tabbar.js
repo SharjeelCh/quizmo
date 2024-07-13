@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import quizTypes from "../JSON/quizTypes.json";
 import serviceTypes from "../JSON/serviceTypes.json";
+import logo from "../assets/logo.png";
+
 function Tabbar() {
   const [showQuizzesMenu, setShowQuizzesMenu] = useState(false);
   const [showServicesMenu, setShowServicesMenu] = useState(false);
@@ -38,14 +40,15 @@ function Tabbar() {
   }, []);
 
   return (
-    <div className="bg-custom-blue flex flex-col sm:flex-row h-10 sm:h-12 md:h-14 lg:h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10">
+    <div className="bg-gradient-to-r from-blue-500 rounded-b-lg to-blue-700 flex flex-col sm:flex-row py-3 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10">
       <div className="flex flex-row gap-4 sm:gap-5 md:gap-6 lg:gap-8">
         <button
-          className="text-white text-sm sm:text-base md:text-lg lg:text-xl"
+          className="text-white text-sm sm:text-base md:text-lg lg:text-xl justify-evenly items-center flex flex-row gap-3"
           onClick={() => {
             window.location.href = "/";
           }}
         >
+          <img src={logo} className="w-7 h-7" />
           QuizMo
         </button>
         <div
@@ -71,7 +74,7 @@ function Tabbar() {
                 types.map((item, index) => (
                   <button
                     key={index}
-                    className="text-gray-800 text-sm hover:bg-gray-300 px-2 py-1 rounded"
+                    className="text-gray-800 text-sm hover:bg-gray-300 transition-colors px-2 py-1 rounded"
                     style={{ minWidth: "20%" }}
                   >
                     {Object.values(item)}
@@ -102,7 +105,7 @@ function Tabbar() {
               {Array.isArray(Services) &&
                 Services.map((item, index) => (
                   <button
-                    className="text-gray-800 text-sm hover:bg-gray-300 px-2 py-1 rounded"
+                    className="text-gray-800 text-sm hover:bg-gray-300 transition-colors px-2 py-1 rounded"
                     key={index}
                   >
                     {Object.values(item)}
@@ -111,7 +114,7 @@ function Tabbar() {
             </div>
           )}
         </div>
-        <button className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:border-b-2 hover:border-white border-b-2 border-blue-600 hover:text-blue-200">
+        <button className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:border-b-2 hover:border-white border-b-2 border-transparent hover:text-blue-200">
           Contact
         </button>
       </div>

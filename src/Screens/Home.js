@@ -1,17 +1,39 @@
-import React from "react";
-import logo from "../assets/logo.webp";
+import React, { useEffect, useState } from "react";
+import logo2 from "../assets/logo2.png";
+import quizTypes from "../JSON/quizTypes.json";
+import { truncateText } from "../Functions/HelperFuncs";
+import Card from "../Components/Card";
+import img1 from "../assets/1.jpg"
+import img2 from "../assets/2.jpg"
+import img3 from "../assets/3.jpg"
+import img4 from "../assets/4.jpg"
+import img5 from "../assets/5.jpg"
+
 
 function Home() {
+  const [types, setTypes] = useState();
+
+  useEffect(() => {
+    const fetchTypes = async () => {
+      try {
+        setTypes(quizTypes.quizTypes);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTypes();
+  }, []);
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
-        <p className="text-xs sm:text-xs md:text-base lg:text-sm font-bold mr-2">
+        <p className="text-sm sm:text-sm md:text-base lg:text-sm font-bold mr-2">
           Free!
         </p>
         <p className="text-sm sm:text-sm md:text-base lg:text-sm mr-2">
           Click here to
         </p>
-        <button className="text-sm sm:text-sm md:text-base lg:text-sm mr-2 text-blue-600">
+        <button className="text-sm sm:text-sm md:text-base lg:text-sm mr-2 text-blue-600 hover:text-blue-900">
           Join QuizMo
         </button>
         <p className="text-sm sm:text-sm md:text-base lg:text-sm">
@@ -19,9 +41,9 @@ function Home() {
         </p>
       </div>
 
-      <div className="flex sm:flex-row h-fit gap-3 bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center my-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
+      <div className="flex sm:flex-row h-fit gap-10 bg-gradient-to-t from-white to-blue-200 rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center my-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
         <img
-          src={logo}
+          src={logo2}
           className="w-32 h-32 sm:w-32 md:w-36 lg:w-40 sm:h-32 md:h-36 lg:h-40"
         />
         <div className="flex-wrap">
@@ -29,9 +51,13 @@ function Home() {
             The World's Greatest Trivia Game
           </p>
           <div>
-            <button className="text-pinkish font-semibold">New One</button>
+            <button className="text-pinkish font-semibold hover:text-pink-900">
+              New One
+            </button>
             <p>or</p>
-            <button className="text-purple-950 font-semibold">Login</button>
+            <button className="text-purple-950 font-semibold hover:text-purple-800">
+              Login
+            </button>
           </div>
         </div>
       </div>
@@ -82,6 +108,103 @@ function Home() {
           <button className="text-white bg-blue-600 px-2 py-1 rounded ml-2 hover:bg-blue-700 transition-colors">
             Go
           </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-start mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2 gap-5">
+        <div className="flex flex-col gap-4 w-full sm:w-auto">
+          <div>
+            <div className="bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+              What's Up?
+            </div>
+            <div className="flex flex-row items-center gap-1 mt-1">
+              <p>2416</p>
+              <button className="text-blue-600 hover:text-blue-900">
+                players
+              </button>
+              <p>playing</p>
+            </div>
+            <div className="flex flex-row items-center gap-1 mt-1">
+              <button className="text-blue-600 hover:text-blue-900">
+                Activity Feed
+              </button>
+            </div>
+          </div>
+          <div>
+            <div className="bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+              All Travia Topics
+            </div>
+            <div className="flex flex-col items-start gap-1 mt-1">
+              {Array.isArray(types) &&
+                types.map((item, index) => (
+                  <button
+                    className="text-blue-600 hover:text-blue-900"
+                    key={index}
+                  >
+                    {truncateText(Object.values(item), 23)}
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 w-full flex-col">
+          <div>
+            <div className="bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+              Start Your Journey!
+            </div>
+            <div className="flex flex-row items-start gap-1 mt-1 flex-wrap">
+              <p className="whitespace-nowrap text-lg">Adventure through the</p>
+              <p className="whitespace-nowrap font-bold text-lg">
+                Realms of Knowledge
+              </p>
+              <p className="whitespace-normal flex-grow text-lg">
+                with - and against - thousands of other players from around the
+                world! Answer questions, play games, join teams, and climb the
+                ranks!
+              </p>
+              <p className="font-bold text-lg">FOR FREE!</p>
+              <p className="text-lg"> Become a</p>
+              <button className="text-blue-600 hover:text-blue-900 text-lg">
+                {" "}
+                Gold Member
+              </button>
+              <p className="text-lg">
+                for an ad-free experience and tons of perks!
+              </p>
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+              Popular Quizes
+            </div>
+            <div className="flex flex-row flex-wrap justify-start gap-12">
+              <Card
+                text={"General Knowledge"}
+                image={img1}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+              />
+              <Card
+                text={"Science"}
+                image={img2}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+              />
+              <Card
+                text={"Sports"}
+                image={img3}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+              />
+              <Card
+                text={"Animals"}
+                image={img4}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+              />
+              <Card
+                text={"History"}
+                image={img5}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
