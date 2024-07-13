@@ -1,5 +1,5 @@
 export const truncateText = (text, maxLength) => {
-  const str = String(text || "").replace(/,/g, ""); // Remove all commas
+  const str = String(text || "").replace(/,/g, "");
   if (str.length <= maxLength) {
     return str;
   }

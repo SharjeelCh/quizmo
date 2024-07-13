@@ -114,7 +114,7 @@ function Tabbar() {
             </div>
           )}
         </div>
-        <button className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:border-b-2 hover:border-white border-b-2 border-transparent hover:text-blue-200">
+        <button className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:border-b-2 hover:border-white border-b-2 border-transparent transition-all hover:text-blue-200">
           Contact
         </button>
       </div>

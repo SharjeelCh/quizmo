@@ -3,12 +3,12 @@ import logo2 from "../assets/logo2.png";
 import quizTypes from "../JSON/quizTypes.json";
 import { truncateText } from "../Functions/HelperFuncs";
 import Card from "../Components/Card";
-import img1 from "../assets/1.jpg"
-import img2 from "../assets/2.jpg"
-import img3 from "../assets/3.jpg"
-import img4 from "../assets/4.jpg"
-import img5 from "../assets/5.jpg"
-
+import img1 from "../assets/1.jpg";
+import img2 from "../assets/2.jpg";
+import img3 from "../assets/3.jpg";
+import img4 from "../assets/4.jpg";
+import img5 from "../assets/5.jpg";
+import img6 from "../assets/6.webp";
 
 function Home() {
   const [types, setTypes] = useState();
@@ -203,8 +203,31 @@ function Home() {
                 image={img5}
                 className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
               />
+              <Card
+                text={"Computers"}
+                image={img6}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+              />
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col h-fit bg-white rounded-md items-start mt-2 p-2">
+        <div className="flex flex-grow sm:flex-row w-full justify-start items-center space-y-2 sm:space-y-0 sm:space-x-4 gap-x-2">
+          <button className="w-full sm:w-auto text-blue-600 hover:text-blue-900 text-md">
+            QuizMo-FAQ
+          </button>
+
+          <button className="w-full sm:w-auto text-blue-600 hover:text-blue-900 text-md">
+            Help / Contact Us
+          </button>
+          <button className="w-full sm:w-auto text-blue-600 hover:text-blue-900 text-md">
+            Conditions of use
+          </button>
+        </div>
+        <div className="text-md flex flex-grow mt-2">
+        Copyright 2024 QuizMo, Inc. All Rights Reserved.
         </div>
       </div>
     </div>
