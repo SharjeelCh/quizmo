@@ -15,6 +15,22 @@ module.exports = {
         "app-bg": "#1c435b",
         pinkish: "#8b2188",
       },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        md: '8px',
+        lg: '12px',
+        xl: '16px',
+      },
+      colors: {
+        glass: 'rgba(255, 255, 255, 0.1)', // Adjust the transparency level as needed
+      },
+      borderColor: {
+        glass: 'rgba(255, 255, 255, 0.3)', // Adjust the transparency level as needed
+      },
+      fontSize:{
+        '2xs': '.625rem',
+      }
     },
   },
   plugins: [],

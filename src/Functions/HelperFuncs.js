@@ -5,3 +5,10 @@ export const truncateText = (text, maxLength) => {
   }
   return str.substring(0, maxLength) + "...";
 };
+
+export const handlegoToSignup = () => {
+  window.location.href = "/Signup";
+}
+export const handlegoToLogin = () => {
+  window.location.href = "/Login";
+}
