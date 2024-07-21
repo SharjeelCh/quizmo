@@ -23,14 +23,23 @@ module.exports = {
         xl: '16px',
       },
       colors: {
-        glass: 'rgba(255, 255, 255, 0.1)', // Adjust the transparency level as needed
+        glass: 'rgba(255, 255, 255, 0.1)', 
       },
       borderColor: {
-        glass: 'rgba(255, 255, 255, 0.3)', // Adjust the transparency level as needed
+        glass: 'rgba(255, 255, 255, 0.3)',
       },
       fontSize:{
         '2xs': '.625rem',
-      }
+      },
+      animation: {
+        'slide-from-left': 'slideFromLeft 1s ease-in-out',
+      },
+      keyframes: {
+        slideFromLeft: {
+          '0%': { transform: 'translateX(-100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+      },
     },
   },
   plugins: [],
