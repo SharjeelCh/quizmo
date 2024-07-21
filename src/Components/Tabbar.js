@@ -74,6 +74,9 @@ function Tabbar() {
                   <button
                     key={index}
                     className="text-gray-800 text-sm hover:bg-gray-300 transition-colors px-2 py-1 rounded"
+                    onClick={() => {
+                      window.location.href = "/QuizPage";
+                    }}
                   >
                     {Object.values(item)}
                   </button>

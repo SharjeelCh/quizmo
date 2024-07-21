@@ -7,6 +7,7 @@ import Home from "./Home";
 import Layout from "./Layout";
 import Login from "./Login";
 import Signup from "./Signup";
+import QuizPage from "./QuizPage";
 function NotFound() {
   return <h1>404 Not Found</h1>;
 }
@@ -18,6 +19,7 @@ export default function Navigation() {
         <Route index element={<Home />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
+        <Route path="/QuizPage" element={<QuizPage />} />
         <Route path="/Quizzes" element={<Quizzes />} />
       </Route>
       <Route element={<NotFound />} />

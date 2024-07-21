@@ -8,7 +8,10 @@ export const truncateText = (text, maxLength) => {
 
 export const handlegoToSignup = () => {
   window.location.href = "/Signup";
-}
+};
 export const handlegoToLogin = () => {
   window.location.href = "/Login";
-}
+};
+export const handlegoToHome = () => {
+  window.location.href = "/";
+};

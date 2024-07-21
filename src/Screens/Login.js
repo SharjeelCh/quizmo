@@ -1,33 +1,34 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { IoLogoGoogle } from "react-icons/io";
-import { handlegoToSignup } from "../Functions/HelperFuncs";
+import { handlegoToHome, handlegoToSignup } from "../Functions/HelperFuncs";
 function Login() {
   return (
     <div className="flex flex-col sm:flex-row h-screen my-3 sm:m-12 overflow-hidden items-center ">
-      <div className="flex flex-col h-fit sm:h-full w-2/3 bg-gradient-to-r from-slate-400 to-blue-500 border-4 border-glass backdrop-blur-md rounded-t-3xl sm:rounded-l-3xl sm:rounded-tr-none justify-center items-center  p-3 sm:p-12 gap-y-8">
-        <img src={logo} className="sm:w-52 sm:h-52 h-44 w-44" />
+      <div className="flex flex-col h-fit sm:h-full w-full bg-gradient-to-r from-slate-400 to-blue-500 border-4 border-glass backdrop-blur-md rounded-t-3xl sm:rounded-l-3xl sm:rounded-tr-none justify-center items-center  p-3 sm:p-12 gap-y-8">
+        <button onClick={handlegoToHome}>
+          <img src={logo} className="sm:w-52 sm:h-52 h-44 w-44 hover:opacity-90 transition-opacity" alt="Quizmo" />
+        </button>
         <p className="text-wrap text-black font-serif font-bold text-2xl sm:text-4xl text-center">
           Welcome Back to QuizMo
         </p>
         <p className="font-medium sm:text-sm text-center text-wrap hidden sm:block">
-          where your knowledge meets fun! Sign In now to
-          continue your exciting journey of learning and challenge yourself with
-          intriguing quizzes.
+          where your knowledge meets fun! Sign In now to continue your exciting
+          journey of learning and challenge yourself with intriguing quizzes.
         </p>
       </div>
-      <div className="flex flex-col h-screen w-2/3 sm:w-1/3 bg-white border-4 border-glass backdrop-blur-md rounded-b-3xl sm:rounded-r-3xl sm:rounded-bl-none p-2">
+      <div className="flex flex-col h-screen w-full bg-white border-4 border-glass backdrop-blur-md rounded-b-3xl sm:rounded-r-3xl sm:rounded-bl-none">
         <div className="flex flex-row items-start w-full justify-end gap-1">
           <p>Don't have an account? </p>
           <button
-            className="text-blue-600 hover:text-blue-900 transition-all"
+            className="text-blue-600 hover:text-blue-900 transition-all px-2"
             onClick={handlegoToSignup}
           >
             Register
           </button>
         </div>
         <div className="flex flex-wrap p-5 flex-col justify-center h-full gap-3">
-          <p className="font-bold text-2xl">Get Started</p>
+          <p className="font-bold text-3xl">Continue With</p>
           <button className="flex flex-row border-2 w-fit px-2 py-1 text-wrap rounded-2xl hover:bg-slate-200 transition-colors gap-1">
             <IoLogoGoogle className="text-2xl text-green-500 text-wrap" />
             <p className="hidden sm:block">Login with Google</p>

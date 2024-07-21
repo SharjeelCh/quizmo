@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import logo2 from "../assets/logo2.png";
 import quizTypes from "../JSON/quizTypes.json";
-import { handlegoToLogin, handlegoToSignup, truncateText } from "../Functions/HelperFuncs";
+import {
+  handlegoToLogin,
+  handlegoToSignup,
+  truncateText,
+} from "../Functions/HelperFuncs";
 import Card from "../Components/Card";
 import img1 from "../assets/1.jpg";
 import img2 from "../assets/2.jpg";
@@ -33,7 +37,10 @@ function Home() {
         <p className="text-sm sm:text-sm md:text-base lg:text-sm mr-2">
           Click here to
         </p>
-        <button className="text-sm sm:text-sm md:text-base lg:text-sm mr-2 text-blue-600 hover:text-blue-900" onClick={handlegoToLogin}>
+        <button
+          className="text-sm sm:text-sm md:text-base lg:text-sm mr-2 text-blue-600 hover:text-blue-900"
+          onClick={handlegoToLogin}
+        >
           Join QuizMo
         </button>
         <p className="text-sm sm:text-sm md:text-base lg:text-sm">
@@ -51,11 +58,17 @@ function Home() {
             The World's Greatest Trivia Game
           </p>
           <div>
-            <button className="text-pinkish font-semibold hover:text-pink-900" onClick={handlegoToSignup}>
+            <button
+              className="text-pinkish font-semibold hover:text-pink-900"
+              onClick={handlegoToSignup}
+            >
               New User
             </button>
             <p>or</p>
-            <button className="text-purple-950 font-semibold hover:text-purple-800" onClick={handlegoToLogin}>
+            <button
+              className="text-purple-950 font-semibold hover:text-purple-800"
+              onClick={handlegoToLogin}
+            >
               Login
             </button>
           </div>
