@@ -8,18 +8,22 @@ import quizTypes from "../JSON/quizTypes.json";
 import Foooter from "../Components/Foooter";
 import { FaBars } from "react-icons/fa";
 import { useSpring, animated } from "react-spring";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function QuizPage() {
   const [types, setTypes] = useState();
+  const navigate = useNavigate();
   const [hasBounced, setHasBounced] = useState(false);
   const [showBounce, setShowBounce] = useState(true);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
+  const location = useLocation();
+  const [showan, setshowan] = useState(false);
+  const { state: item } = location;
 
   const props = useSpring({
     opacity: show ? 1 : 0,
-    transform: show ? "translateY(0)" : "translateY(-30px)",
+    transform: show ? "translateY(0)" : "translateY(10px)",
   });
-
   useEffect(() => {
     if (showBounce) {
       setTimeout(() => {
@@ -29,6 +33,7 @@ function QuizPage() {
   }, [showBounce]);
 
   useEffect(() => {
+    setshowan(true);
     const fetchTypes = async () => {
       try {
         setTypes(quizTypes.quizTypes);
@@ -44,38 +49,56 @@ function QuizPage() {
       {<JoinComp />}
 
       <div className="flex sm:flex-row sm:flex-wrap w-full flex-wrap h-fit justify-around gap-10 bg-gradient-to-t from-white to-blue-200 rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg my-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
-        <img
-          src={img}
-          className="w-28 h-28 sm:w-32 md:w-36 lg:w-40 sm:h-32 md:h-36 lg:h-40 rounded-lg"
-        />
+        <div className={`${show ? "animate-slide-from-left" : ""}`}>
+          <img
+            src={img}
+            className="w-28 h-28 sm:w-32 md:w-36 lg:w-40 sm:h-32 md:h-36 lg:h-40 rounded-lg"
+          />
+        </div>
         <div className="flex-wrap">
           <p className="text-app-bg font-semibold text-2xl text-wrap">
-            General Knowledge Trivia
+            {JSON.stringify(item).replace(/"/g, "")}
           </p>
           <p className="text-pinkish font-normal hover:text-pink-900 text-wrap">
-            General Knowledge Trivia Quizzes
+            {JSON.stringify(item).replace(/"/g, "")} Quizzes
           </p>
           <div className="flex flex-wrap flex-row gap-2 items-center">
-            <button className="text-wrap text-blue-500 hover:text-blue-600 transition-colors">
+            <button
+              className="text-wrap text-blue-500 hover:text-blue-600 transition-colors"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               Home
             </button>
             <TbArrowRight className="text-sm" color="black" />
-            <button className="text-wrap text-blue-500 hover:text-blue-600 transition-colors">
-              {truncateText("generalknowledge", 6)}
+            <button
+              className="text-wrap text-blue-500 hover:text-blue-600 transition-colors"
+              onClick={() => {
+                navigate("/QuizPage", { state: item });
+              }}
+            >
+              {truncateText(`${JSON.stringify(item).replace(/"/g, "")}`, 9)}
             </button>
             <TbArrowRight className="text-sm" color="black" />
           </div>
         </div>
-        <img
-          src={logo2}
-          className="w-28 h-28 sm:w-32 md:w-36 lg:w-40 sm:h-32 md:h-36 lg:h-40"
-        />
+        <div className={`${show ? "animate-slide-from-right" : ""}`}>
+          <img
+            src={logo2}
+            className="w-28 h-28 sm:w-32 md:w-36 lg:w-40 sm:h-32 md:h-36 lg:h-40"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-start mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2 gap-5">
         <div className="flex flex-col gap-4 w-full sm:w-auto">
           <div>
-            <div className="bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-left" : ""
+              } bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               What's Up?
             </div>
             <div className="flex flex-row items-center gap-1 mt-1">
@@ -92,7 +115,11 @@ function QuizPage() {
             </div>
           </div>
           <div>
-            <div className="bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-left" : ""
+              } bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               Categories
             </div>
             <div className="flex flex-wrap flex-col gap-1 mt-1">
@@ -101,7 +128,11 @@ function QuizPage() {
             </div>
           </div>
           <div>
-            <div className="flex flex-row justify-between items-center bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-left" : ""
+              } flex flex-row justify-between items-center bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               All Travia Topics
               <button
                 onClick={() => {
@@ -121,6 +152,9 @@ function QuizPage() {
                     <button
                       className="text-blue-600 hover:text-blue-900"
                       key={index}
+                      onClick={() => {
+                        navigate("/QuizPage", { state: item });
+                      }}
                     >
                       {truncateText(Object.values(item), 23)}
                     </button>
@@ -131,7 +165,11 @@ function QuizPage() {
         </div>
         <div className="flex-1 w-full flex-col">
           <div>
-            <div className="bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-right" : ""
+              } bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               Set Up a quiz now!
             </div>
             <div
@@ -140,9 +178,14 @@ function QuizPage() {
               } text-app-bg font-bold my-3 text-center text-2xl text-wrap`}
               onAnimationEnd={() => setHasBounced(true)}
             >
-              General Knowledge Trivia
+              {JSON.stringify(item).replace(/"/g, "")}
             </div>
-            <form className="flex flex-col flex-wrap mt-2">
+            <form
+              className="flex flex-col flex-wrap mt-2"
+              onSubmit={() => {
+                navigate("/Quizzes", { state: item });
+              }}
+            >
               <strong className="text-black mb-2 text-wrap">
                 Number of questions
               </strong>
@@ -174,7 +217,10 @@ function QuizPage() {
                 <option value="Multi-choice">Multi-choice</option>
                 <option value="True/False">true/false</option>
               </select>
-              <button className="bg-blue-500 text-white rounded-lg p-2 my-3 text-wrap font-medium text-lg hover:bg-blue-600 transition-colors">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white rounded-lg p-2 my-3 text-wrap font-medium text-lg hover:bg-blue-600 transition-colors"
+              >
                 Start Quiz
               </button>
             </form>

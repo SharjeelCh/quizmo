@@ -3,11 +3,14 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import quizTypes from "../JSON/quizTypes.json";
 import serviceTypes from "../JSON/serviceTypes.json";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
+import { type } from "@testing-library/user-event/dist/type";
 
 function Tabbar() {
   const [showQuizzesMenu, setShowQuizzesMenu] = useState(false);
   const [showServicesMenu, setShowServicesMenu] = useState(false);
   const [types, setTypes] = useState();
+  const navigate=useNavigate();
   const [Services, setservices] = useState();
   const handleQuizzesEnter = () => {
     setShowQuizzesMenu(true);
@@ -39,7 +42,7 @@ function Tabbar() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 rounded-b-lg to-blue-700 flex flex-col flex-grow sm:flex-row py-3 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10">
+    <div className="z-10 bg-gradient-to-r from-blue-500 rounded-b-lg to-blue-700 flex flex-col flex-grow sm:flex-row py-3 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10">
       <div className="flex flex-row gap-4 sm:gap-x-5 md:gap-x-6 lg:gap-x-8">
         <button
           className="text-white text-sm sm:text-base md:text-lg lg:text-xl justify-evenly items-center flex flex-row gap-3"
@@ -75,7 +78,7 @@ function Tabbar() {
                     key={index}
                     className="text-gray-800 text-sm hover:bg-gray-300 transition-colors px-2 py-1 rounded"
                     onClick={() => {
-                      window.location.href = "/QuizPage";
+                      navigate(`/QuizPage/`,{state:item});
                     }}
                   >
                     {Object.values(item)}

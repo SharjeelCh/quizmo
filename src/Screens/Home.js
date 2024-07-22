@@ -13,11 +13,20 @@ import img3 from "../assets/3.jpg";
 import img4 from "../assets/4.jpg";
 import img5 from "../assets/5.jpg";
 import img6 from "../assets/6.webp";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [types, setTypes] = useState();
+  const [show, setshow] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    setshow(true);
+    if (show) {
+      setTimeout(() => {
+        setshow(false);
+      }, 3000);
+    }
     const fetchTypes = async () => {
       try {
         setTypes(quizTypes.quizTypes);
@@ -53,7 +62,7 @@ function Home() {
           src={logo2}
           className="w-32 h-32 sm:w-32 md:w-36 lg:w-40 sm:h-32 md:h-36 lg:h-40"
         />
-        <div className="flex-wrap">
+        <div className={`${show ? "animate-slide-from-right" : ""} flex-wrap`}>
           <p className="text-app-bg font-bold text-3xl">
             The World's Greatest Trivia Game
           </p>
@@ -76,38 +85,102 @@ function Home() {
       </div>
 
       <div className="flex flex-wrap flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center justify-center mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
-        <p className="text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-cyan-950">
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-cyan-950`}
+        >
           2.5 Million
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md font-bold mr-2">
-          Questions
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md font-bold mr-2`}
+        >
+          Question
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md mr-2">|</p>
-        <p className="text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-red-700">
-          160000
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md mr-2`}
+        >
+          |
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md-sm mr-2">
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-red-700`}
+        >
+          16000
+        </p>
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md-sm mr-2`}
+        >
           Quizes
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md mr-2">|</p>
-        <p className="text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-orange-900">
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md mr-2`}
+        >
+          |
+        </p>
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-orange-900`}
+        >
           14000
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md  mr-2">
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md  mr-2`}
+        >
           Topics
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md mr-2">|</p>
-        <p className="text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-yellow-600">
-          100000
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md mr-2`}
+        >
+          |
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md  mr-2">
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-yellow-600`}
+        >
+          10000
+        </p>
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md  mr-2`}
+        >
           Players
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md mr-2">|</p>
-        <p className="text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-blue-800">
-          400
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md mr-2`}
+        >
+          |
         </p>
-        <p className="text-base sm:text-base md:text-base lg:text-md mr-2">
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md font-bold mr-2 text-blue-800`}
+        >
+          40000
+        </p>
+        <p
+          className={`${
+            show ? "animate-slide-from-left" : ""
+          } text-base sm:text-base md:text-base lg:text-md mr-2`}
+        >
           Uniques Challenges
         </p>
       </div>
@@ -115,8 +188,11 @@ function Home() {
       <div className="flex flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2 justify-between">
         <p className="text-lg font-bold mr-2">Updated Daily, Since deployed</p>
         <div className="flex">
-          <div className="border-2 border-black w-fit h-fit">
-            <input placeholder="Topic Search" className="px-1" />
+          <div className="w-fit h-fit">
+            <input
+              placeholder="Topic Search"
+              className="border-gray-300 border-2 focus:shadow-sm focus:outline-none focus:border-blue-600 px-3 py-2 transition-colors"
+            />
           </div>
           <button className="text-white bg-blue-600 px-2 py-1 rounded ml-2 hover:bg-blue-700 transition-colors">
             Go
@@ -127,7 +203,11 @@ function Home() {
       <div className="flex flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-start mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2 gap-5">
         <div className="flex flex-col gap-4 w-full sm:w-auto">
           <div>
-            <div className="bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-left" : ""
+              } bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               What's Up?
             </div>
             <div className="flex flex-row items-center gap-1 mt-1">
@@ -144,7 +224,11 @@ function Home() {
             </div>
           </div>
           <div>
-            <div className="bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-left" : ""
+              } bg-blue-300 font-bold text-lg w-full sm:w-52 rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               All Travia Topics
             </div>
             <div className="flex flex-col items-start gap-1 mt-1">
@@ -153,6 +237,9 @@ function Home() {
                   <button
                     className="text-blue-600 hover:text-blue-900"
                     key={index}
+                    onClick={() => {
+                      navigate(`/QuizPage/`, { state: item });
+                    }}
                   >
                     {truncateText(Object.values(item), 23)}
                   </button>
@@ -162,7 +249,11 @@ function Home() {
         </div>
         <div className="flex-1 w-full flex-col">
           <div>
-            <div className="bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-right" : ""
+              } bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               Start Your Journey!
             </div>
             <div className="flex flex-row items-start gap-1 mt-1 flex-wrap">
@@ -187,7 +278,11 @@ function Home() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1">
+            <div
+              className={`${
+                show ? "animate-slide-from-right" : ""
+              } bg-blue-200 font-bold text-lg rounded-t-md sm:rounded-t-md md:rounded-t-lg px-2 py-1`}
+            >
               Popular Quizes
             </div>
             <div className="flex flex-row flex-wrap justify-start gap-12">

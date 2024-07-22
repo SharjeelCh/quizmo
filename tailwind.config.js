@@ -16,28 +16,33 @@ module.exports = {
         pinkish: "#8b2188",
       },
       backdropBlur: {
-        xs: '2px',
-        sm: '4px',
-        md: '8px',
-        lg: '12px',
-        xl: '16px',
+        xs: "2px",
+        sm: "4px",
+        md: "8px",
+        lg: "12px",
+        xl: "16px",
       },
       colors: {
-        glass: 'rgba(255, 255, 255, 0.1)', 
+        glass: "rgba(255, 255, 255, 0.1)",
       },
       borderColor: {
-        glass: 'rgba(255, 255, 255, 0.3)',
+        glass: "rgba(255, 255, 255, 0.3)",
       },
-      fontSize:{
-        '2xs': '.625rem',
+      fontSize: {
+        "2xs": ".625rem",
       },
       animation: {
-        'slide-from-left': 'slideFromLeft 1s ease-in-out',
+        "slide-from-left": "slideFromLeft 1s ease-in-out",
+        "slide-from-right": "slideFromRight 1s ease-in-out",
       },
       keyframes: {
         slideFromLeft: {
-          '0%': { transform: 'translateX(-100%)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
+          "0%": { transform: "translateX(-100%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        slideFromRight: {
+          "0%": { transform: "translateX(100%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
         },
       },
     },
