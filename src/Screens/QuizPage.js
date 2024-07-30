@@ -9,6 +9,7 @@ import Foooter from "../Components/Foooter";
 import { FaBars } from "react-icons/fa";
 import { useSpring, animated } from "react-spring";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Box, Input, TextField } from "@mui/material";
 
 function QuizPage() {
   const [types, setTypes] = useState();
@@ -180,10 +181,10 @@ function QuizPage() {
             >
               {JSON.stringify(item).replace(/"/g, "")}
             </div>
-            <form
+            <Box
               className="flex flex-col flex-wrap mt-2"
+              component={"form"}
               onSubmit={(e) => {
-                // navigate("/Quizzes", { state: item });
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
                 const inputs = {
@@ -191,7 +192,9 @@ function QuizPage() {
                   difficulty: data.get("difficulty"),
                   type: data.get("type"),
                 };
-                console.log(inputs);
+                inputs.number_of_qs
+                  ? navigate("/QuizMulti", { state: item })
+                  : alert("Please enter number of questions");
               }}
             >
               <strong className="text-black mb-2 text-wrap">
@@ -232,7 +235,7 @@ function QuizPage() {
               >
                 Start Quiz
               </button>
-            </form>
+            </Box>
           </div>
         </div>
       </div>
