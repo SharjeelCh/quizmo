@@ -13,7 +13,7 @@ import img3 from "../assets/3.jpg";
 import img4 from "../assets/4.jpg";
 import img5 from "../assets/5.jpg";
 import img6 from "../assets/6.webp";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
   const [types, setTypes] = useState();
@@ -46,12 +46,12 @@ function Home() {
         <p className="text-sm sm:text-sm md:text-base lg:text-sm mr-2">
           Click here to
         </p>
-        <button
+        <Link
           className="text-sm sm:text-sm md:text-base lg:text-sm mr-2 text-blue-600 hover:text-blue-900"
-          onClick={handlegoToLogin}
+          to={"/Login"}
         >
           Join QuizMo
-        </button>
+        </Link>
         <p className="text-sm sm:text-sm md:text-base lg:text-sm">
           Thousands of games, quizzes, and lots more!
         </p>
@@ -67,19 +67,19 @@ function Home() {
             The World's Greatest Trivia Game
           </p>
           <div>
-            <button
+            <Link
               className="text-pinkish font-semibold hover:text-pink-900"
-              onClick={handlegoToSignup}
+              to={"/Signup"}
             >
               New User
-            </button>
+            </Link>
             <p>or</p>
-            <button
+            <Link
               className="text-purple-950 font-semibold hover:text-purple-800"
-              onClick={handlegoToLogin}
+              to={"/Login"}
             >
               Login
-            </button>
+            </Link>
           </div>
         </div>
       </div>

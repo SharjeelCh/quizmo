@@ -182,8 +182,16 @@ function QuizPage() {
             </div>
             <form
               className="flex flex-col flex-wrap mt-2"
-              onSubmit={() => {
-                navigate("/Quizzes", { state: item });
+              onSubmit={(e) => {
+                // navigate("/Quizzes", { state: item });
+                e.preventDefault();
+                const data = new FormData(e.currentTarget);
+                const inputs = {
+                  number_of_qs: data.get("number"),
+                  difficulty: data.get("difficulty"),
+                  type: data.get("type"),
+                };
+                console.log(inputs);
               }}
             >
               <strong className="text-black mb-2 text-wrap">
@@ -193,6 +201,7 @@ function QuizPage() {
                 type="number"
                 max={15}
                 min={5}
+                name="number"
                 placeholder="Number of questions"
                 className="border-2 border-gray-400 rounded-lg p-2 text-wrap focus:shadow-sm focus:outline-none focus:border-blue-600 mb-2"
               />

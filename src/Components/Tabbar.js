@@ -3,15 +3,16 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import quizTypes from "../JSON/quizTypes.json";
 import serviceTypes from "../JSON/serviceTypes.json";
 import logo from "../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { type } from "@testing-library/user-event/dist/type";
 
 function Tabbar() {
   const [showQuizzesMenu, setShowQuizzesMenu] = useState(false);
   const [showServicesMenu, setShowServicesMenu] = useState(false);
   const [types, setTypes] = useState();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [Services, setservices] = useState();
+  const [show,setshow]=useState(false);
   const handleQuizzesEnter = () => {
     setShowQuizzesMenu(true);
   };
@@ -44,15 +45,13 @@ function Tabbar() {
   return (
     <div className="z-10 bg-gradient-to-r from-blue-500 rounded-b-lg to-blue-700 flex flex-col flex-grow sm:flex-row py-3 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10">
       <div className="flex flex-row gap-4 sm:gap-x-5 md:gap-x-6 lg:gap-x-8">
-        <button
+        <Link
           className="text-white text-sm sm:text-base md:text-lg lg:text-xl justify-evenly items-center flex flex-row gap-3"
-          onClick={() => {
-            window.location.href = "/";
-          }}
+          to={"/"}
         >
           <img src={logo} className="w-7 h-7" />
           QuizMo
-        </button>
+        </Link>
         <div
           className="relative"
           onMouseEnter={handleQuizzesEnter}
@@ -78,7 +77,7 @@ function Tabbar() {
                     key={index}
                     className="text-gray-800 text-sm hover:bg-gray-300 transition-colors px-2 py-1 rounded"
                     onClick={() => {
-                      navigate(`/QuizPage/`,{state:item});
+                      navigate(`/QuizPage/`, { state: item });
                     }}
                   >
                     {Object.values(item)}
@@ -123,22 +122,18 @@ function Tabbar() {
         </button>
       </div>
       <div className="flex flex-row gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-        <button
+        <Link
           className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-200"
-          onClick={() => {
-            window.location.href = "/Login";
-          }}
+          to={"/Login"}
         >
           Login
-        </button>
-        <button
+        </Link>
+        <Link
           className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-200"
-          onClick={() => {
-            window.location.href = "/Signup";
-          }}
+          to={"/Signup"}
         >
           Sign Up
-        </button>
+        </Link>
       </div>
     </div>
   );
