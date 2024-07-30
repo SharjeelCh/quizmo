@@ -4,8 +4,8 @@ import ProgressBar from "../Components/ProgressBar";
 export const QuizMulti = () => {
   const [Increase, setincrease] = useState(false);
   return (
-    <div className="flex flex-col  items-center px-4 bg-white h-dvh">
-      <ProgressBar totalQs={10} increase={Increase} setincrease={setincrease} />
+    <div className="flex flex-col justify-evenly items-center px-4 bg-white h-dvh">
+      <ProgressBar totalQs={7} increase={Increase} setincrease={setincrease} />
       <button
         onClick={() => {
           setincrease(true);

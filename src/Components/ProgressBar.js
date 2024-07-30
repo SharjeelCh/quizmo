@@ -17,21 +17,22 @@ function ProgressBar({ totalQs, increase, setincrease }) {
   }, [increase]);
 
   return (
-    <div className="w-full bg-slate-300 rounded-3xl">
+    <div className="flex items-center w-full bg-slate-400 rounded-3xl">
       <div
         style={{
-          width: current == 0 ? 30 : `${current}%`,
-          backgroundColor: "green",
+          width: `${current}%`,
         }}
-        className="flex justify-center items-center transition-all text-white text-center rounded-3xl py-3"
-      >
+        className="flex justify-center bg-gradient-to-r from-orange-400 to-purple-600 items-center transition-all text-white text-center rounded-3xl py-6"
+      ></div>
+      <p className="fixed left-1/2 right-1/2 text-white">
+        {" "}
         {current.toFixed(0)}%
-      </div>
+      </p>
 
       <style jsx>{`
         @media (max-width: 640px) {
           .progress-bar {
-            width: ${current === 0 ? "20px" : `${current}%`};
+            width: ${`${current}%`};
           }
         }
       `}</style>
