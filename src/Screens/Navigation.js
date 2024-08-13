@@ -9,22 +9,24 @@ import Login from "./Login";
 import Signup from "./Signup";
 import QuizPage from "./QuizPage";
 import { QuizMulti } from "./QuizMulti";
+import Rankings from "./Rankings";
 function NotFound() {
-  return <h1>404 Not Found</h1>;
+ return <h1>404 Not Found</h1>;
 }
 
 export default function Navigation() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/QuizPage" element={<QuizPage />} />
-        <Route path="/QuizMulti" element={<QuizMulti />} />
-        <Route path="/Quizzes" element={<Quizzes />} />
-      </Route>
-      <Route element={<NotFound />} />
-    </Routes>
-  );
+ return (
+  <Routes>
+   <Route path="/" element={<Layout />}>
+    <Route index element={<Home />} />
+    <Route path="/Login" element={<Login />} />
+    <Route path="/Signup" element={<Signup />} />
+    <Route path="/QuizPage" element={<QuizPage />} />
+    <Route path="/QuizMulti" element={<QuizMulti />} />
+    <Route path="/Quizzes" element={<Quizzes />} />
+    <Route path="/Rankings" element={<Rankings />} />
+   </Route>
+   <Route element={<NotFound />} />
+  </Routes>
+ );
 }

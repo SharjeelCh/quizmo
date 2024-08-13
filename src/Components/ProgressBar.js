@@ -22,9 +22,9 @@ function ProgressBar({ totalQs, increase, setincrease }) {
         style={{
           width: `${current}%`,
         }}
-        className="flex justify-center bg-gradient-to-r from-orange-400 to-purple-600 items-center transition-all text-white text-center rounded-3xl py-6"
+        className="flex justify-center bg-gradient-to-r from-orange-600 to-purple-700 items-center transition-all text-white text-center rounded-3xl py-6"
       ></div>
-      <p className="fixed left-1/2 right-1/2 text-white">
+      <p className="fixed left-1/2 right-1/2 text-white font-bold font-mono">
         {" "}
         {current.toFixed(0)}%
       </p>

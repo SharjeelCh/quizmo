@@ -47,3 +47,12 @@
   }
 }
 
+
+@media(max-width:233px){
+  #griid{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
