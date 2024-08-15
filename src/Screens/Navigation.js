@@ -10,6 +10,8 @@ import Signup from "./Signup";
 import QuizPage from "./QuizPage";
 import { QuizMulti } from "./QuizMulti";
 import Rankings from "./Rankings";
+import Contact from "./Contact";
+import AboutUs from "./About Us";
 function NotFound() {
  return <h1>404 Not Found</h1>;
 }
@@ -25,7 +27,9 @@ export default function Navigation() {
     <Route path="/QuizMulti" element={<QuizMulti />} />
     <Route path="/Quizzes" element={<Quizzes />} />
     <Route path="/Rankings" element={<Rankings />} />
-   </Route>
+    <Route path="/Contact" element={<Contact />} />
+    <Route path="/About Us" element={<AboutUs />} />
+    </Route>
    <Route element={<NotFound />} />
   </Routes>
  );
