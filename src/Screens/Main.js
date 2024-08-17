@@ -5,7 +5,13 @@ import { Outlet, useLocation } from "react-router-dom";
 function Main() {
  const location = useLocation();
 
- const hideTabbarPaths = ["/Login", "/Signup", "/QuizMulti", "/Rankings"];
+ const hideTabbarPaths = [
+  "/Login",
+  "/Signup",
+  "/Multi-choice",
+  "/Rankings",
+  "/True,False",
+ ];
 
  const shouldHideTabbar = hideTabbarPaths.includes(location.pathname);
 

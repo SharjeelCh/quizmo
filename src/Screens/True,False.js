@@ -1,42 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProgressBar from "../Components/ProgressBar";
-import { Button, FormControlLabel, Checkbox } from "@mui/material";
+import { Button, FormControlLabel, RadioGroup, Radio } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import "../App.css";
 import { useLocation } from "react-router-dom";
 import { findingCorrectAnswer, scoreLogic } from "../Functions/QuizLogic";
-import Quiz_Dialog from "../Components/Dialogg";
 
-export const QuizMulti = () => {
+export const QuizTrue_False = () => {
  const [showAlert, setShowAlert] = useState(false);
  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
  const [userQuizData, setuserQuizData] = useState({});
  const [loading, setLoading] = useState(false);
  const location = useLocation();
- const [permission, setPermission] = useState(true);
  const { state: item } = location;
-
  console.log(item);
+
  const quizes = {
   1: {
-   question: "What is the capital of France?",
-   options: ["Paris", "London", "Berlin", "Madrid"],
-   answer: "Paris",
+   question: "The Earth is flat.",
+   answer: "False",
   },
   2: {
-   question: "What is the capital of Spain?",
-   options: ["Paris", "London", "America", "Paros"],
-   answer: "Madrid",
+   question: "Water boils at 100°C at sea level.",
+   answer: "True",
   },
   3: {
-   question: "What is the capital of Germany?",
-   options: ["Paris", "London", "Berlin", "Madrid"],
-   answer: "Berlin",
+   question: "The sun rises in the west.",
+   answer: "False",
   },
   4: {
-   question: "What is the capital of Italy?",
-   options: ["Rome", "London", "Berlin", "Madrid"],
-   answer: "Rome",
+   question: "The human body has 206 bones.",
+   answer: "True",
   },
  };
 
@@ -51,10 +45,6 @@ export const QuizMulti = () => {
    </Alert>
   );
  };
-
- //if (permission) {
- // return <Quiz_Dialog />;
- //}
 
  if (loading) {
   return <h1>Loading...</h1>;
@@ -110,24 +100,24 @@ export const QuizMulti = () => {
    <h1 className="font-serif text-lg sm:text-2xl md:2xl lg:3xl xl:3xl">
     {quizes[current].question}
    </h1>
-   <div className="grid grid-cols-2" id="griid">
-    {quizes[current].options.map((option, key) => {
-     return (
-      <FormControlLabel
-       key={key}
-       control={
-        <Checkbox
-         checked={selectedOp === option}
-         onChange={() => handleOptionChange(option)}
-         color="primary"
-        />
-       }
-       label={option}
-       className="justify-center items-center gap-x-3 border-2 border-gray-300 rounded-2xl p-4 mt-5 mr-5 text-wrap hover:bg-slate-300 transition-colors"
-      />
-     );
-    })}
-   </div>
+   <RadioGroup
+    className="grid grid-cols-2"
+    value={selectedOp}
+    onChange={(e) => handleOptionChange(e.target.value)}
+   >
+    <FormControlLabel
+     value="True"
+     control={<Radio color="primary" />}
+     label="True"
+     className="justify-center items-center gap-x-3 border-2 border-gray-300 rounded-2xl p-4 mt-5 mr-5 text-wrap hover:bg-slate-300 transition-colors"
+    />
+    <FormControlLabel
+     value="False"
+     control={<Radio color="primary" />}
+     label="False"
+     className="justify-center items-center gap-x-3 border-2 border-gray-300 rounded-2xl p-4 mt-5 mr-5 text-wrap hover:bg-slate-300 transition-colors"
+    />
+   </RadioGroup>
    <Button
     onClick={handleQuiz}
     type="submit"
