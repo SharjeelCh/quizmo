@@ -1,13 +1,20 @@
 export const findingCorrectAnswer = (apiData, userData) => {
  let correctAnswers = 0;
- Object.keys(userData).map((key) => {
-  if (apiData[key].answer === userData[key]) {
-   correctAnswers++;
+
+ Object.keys(userData).forEach((key) => {
+  if (
+   !isNaN(key) &&
+   apiData[key] &&
+   apiData[key].correct_answer !== undefined
+  ) {
+   if (apiData[key].correct_answer === userData[key]) {
+    correctAnswers++;
+   }
   }
  });
+
  return correctAnswers;
 };
-
 export const scoreLogic = (diificulty, totalQuestions, correctAnswers) => {
  let score = 0;
  if (diificulty === "easy") {

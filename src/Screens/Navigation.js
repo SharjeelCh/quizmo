@@ -13,6 +13,7 @@ import Rankings from "./Rankings";
 import Contact from "./Contact";
 import AboutUs from "./About Us";
 import { QuizTrue_False } from "./True,False";
+import QuizResult from "../Components/QuizResult";
 function NotFound() {
  return <h1>404 Not Found</h1>;
 }
@@ -31,6 +32,7 @@ export default function Navigation() {
     <Route path="/Contact" element={<Contact />} />
     <Route path="/About Us" element={<AboutUs />} />
     <Route path="True,False" element={<QuizTrue_False />} />
+    <Route path="QuizResult" element={<QuizResult />} />
    </Route>
    <Route element={<NotFound />} />
   </Routes>

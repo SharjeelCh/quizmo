@@ -189,6 +189,7 @@ function QuizPage() {
          number_of_qs: data.get("number"),
          difficulty: data.get("difficulty"),
          type: data.get("type"),
+         quiz_type: JSON.stringify(item).replace(/"/g, ""),
         };
         inputs.number_of_qs
          ? navigate(`/${inputs.type}`, { state: inputs })

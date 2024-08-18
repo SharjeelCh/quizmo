@@ -3,45 +3,29 @@ import ProgressBar from "../Components/ProgressBar";
 import { Button, FormControlLabel, Checkbox } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import "../App.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { findingCorrectAnswer, scoreLogic } from "../Functions/QuizLogic";
 import Quiz_Dialog from "../Components/Dialogg";
+import axios from "axios";
 
 export const QuizMulti = () => {
+ const navigate = useNavigate(); 
  const [showAlert, setShowAlert] = useState(false);
  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
  const [userQuizData, setuserQuizData] = useState({});
+ const [quizType, setQuizType] = useState();
  const [loading, setLoading] = useState(false);
  const location = useLocation();
  const [permission, setPermission] = useState(true);
+ const [hide, setHide] = useState(false);
  const { state: item } = location;
+ useEffect(() => {
+  setQuizType(item.type === "Multi-choice" ? "multiple" : "boolean");
+ }, [item]);
 
- console.log(item);
- const quizes = {
-  1: {
-   question: "What is the capital of France?",
-   options: ["Paris", "London", "Berlin", "Madrid"],
-   answer: "Paris",
-  },
-  2: {
-   question: "What is the capital of Spain?",
-   options: ["Paris", "London", "America", "Paros"],
-   answer: "Madrid",
-  },
-  3: {
-   question: "What is the capital of Germany?",
-   options: ["Paris", "London", "Berlin", "Madrid"],
-   answer: "Berlin",
-  },
-  4: {
-   question: "What is the capital of Italy?",
-   options: ["Rome", "London", "Berlin", "Madrid"],
-   answer: "Rome",
-  },
- };
-
+ const [quizes, setQuizes] = useState([]);
  const [increase, setIncrease] = useState(false);
- const [current, setCurrent] = useState(1);
+ const [current, setCurrent] = useState(0);
  const [selectedOp, setSelectedOp] = useState("");
 
  const Alertt = ({ text, severity }) => {
@@ -52,9 +36,32 @@ export const QuizMulti = () => {
   );
  };
 
- //if (permission) {
- // return <Quiz_Dialog />;
- //}
+ useEffect(() => {
+  if (!quizType) return;
+  axios
+   .get(
+    `https://opentdb.com/api.php?amount=${item.number_of_qs}&category=9&difficulty=${item.difficulty}&type=${quizType}`
+   )
+   .then((response) => {
+    const fetchedQuizzes = response.data.results.map((quiz) => {
+     const options = [...quiz.incorrect_answers, quiz.correct_answer].sort(
+      () => Math.random() - 0.5
+     );
+     return { ...quiz, options };
+    });
+    setQuizes(fetchedQuizzes);
+    setLoading(false);
+   })
+   .catch((error) => {
+    console.error("Error fetching quiz data:", error);
+    setShowAlert(true);
+    setLoading(false);
+   });
+ }, [quizType, hide]);
+
+ if (permission && !hide) {
+  return <Quiz_Dialog hide={setHide} />;
+ }
 
  if (loading) {
   return <h1>Loading...</h1>;
@@ -65,26 +72,50 @@ export const QuizMulti = () => {
    setShowAlert(true);
    return;
   }
-  setIncrease(true);
-  if (current < Object.keys(quizes).length) {
+
+  setuserQuizData((prevData) => ({
+   ...prevData,
+   [current]: selectedOp,
+  }));
+
+  if (current < quizes.length - 1) {
+   setIncrease(true);
    setCurrent(current + 1);
    setSelectedOp("");
    setShowAlert(false);
   } else {
    setShowSuccessAlert(true);
    setLoading(true);
-   scoreLogic(
+
+   const score = scoreLogic(
     item.difficulty,
-    Object.keys(quizes).length,
-    findingCorrectAnswer(quizes, userQuizData)
+    quizes.length,
+    findingCorrectAnswer(quizes, {
+     ...userQuizData,
+     [current]: selectedOp,
+    })
    );
+
+   navigate("/QuizResult", {
+    state: {
+     quizes,
+     userQuizData: { ...userQuizData, [current]: selectedOp },
+     score,
+    },
+   });
    setLoading(false);
   }
  };
 
  const handleOptionChange = (option) => {
   setSelectedOp(option);
-  setuserQuizData({ ...userQuizData, [current]: option });
+  setuserQuizData({
+   ...userQuizData,
+   [current]: option,
+   quizType: item.quiz_type,
+   difficulty: item.difficulty,
+   type: item.type,
+  });
  };
 
  return (
@@ -96,14 +127,16 @@ export const QuizMulti = () => {
     <Alertt text={"Quiz completed successfully!"} severity={"success"} />
    )}
    <ProgressBar
-    totalQs={Object.keys(quizes).length}
+    totalQs={quizes.length}
     increase={increase}
     setincrease={setIncrease}
    />
    <section className="flex flex-row flex-wrap items-center">
-    <strong className="font-bold text-2xl text-wrap">Question {current}</strong>
+    <strong className="font-bold text-2xl text-wrap">
+     Question {current + 1}
+    </strong>
     <strong className="flex flex-wrap font-semibold text-base">
-     /{Object.keys(quizes).length}
+     /{item.number_of_qs}
     </strong>
    </section>
    <div className="border-dashed border-2 border-blue-300"></div>
@@ -135,7 +168,7 @@ export const QuizMulti = () => {
     variant="contained"
     sx={{ mt: 3, mb: 2, py: 1.5 }}
    >
-    {current === Object.keys(quizes).length ? "Submit" : "Next"}
+    {current === quizes.length - 1 ? "Submit" : "Next"}
    </Button>
   </div>
  );

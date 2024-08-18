@@ -11,6 +11,7 @@ function Main() {
   "/Multi-choice",
   "/Rankings",
   "/True,False",
+  "/QuizResult",
  ];
 
  const shouldHideTabbar = hideTabbarPaths.includes(location.pathname);
