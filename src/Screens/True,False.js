@@ -9,6 +9,7 @@ import Quiz_Dialog from "../Components/Dialogg";
 import axios from "axios";
 import { returnQuizTypeNumber } from "../Functions/HelperFuncs";
 import quizTypes2 from "../JSON/quizTypes2.json";
+import { decode } from "html-entities";
 
 export const QuizTrue_False = () => {
  const navigate = useNavigate();
@@ -68,7 +69,14 @@ export const QuizTrue_False = () => {
      const options = [...quiz.incorrect_answers, quiz.correct_answer].sort(
       () => Math.random() - 0.5
      );
-     return { ...quiz, options };
+     const decodedQuiz = {
+      ...quiz,
+      question: decode(quiz.question),
+      correct_answer: decode(quiz.correct_answer),
+      options: options.map(decode),
+     };
+
+     return decodedQuiz;
     });
     setQuizes(fetchedQuizzes);
     setLoading(false);
@@ -86,6 +94,24 @@ export const QuizTrue_False = () => {
 
  if (loading) {
   return <h1>Loading...</h1>;
+ }
+
+ if (quizes.length === 0) {
+  return (
+   <div className="flex flex-col justify-center items-center h-dvh gap-4 mx-3">
+    <h1 className="text-2xl text-white text-wrap">
+     No questions available for this category Please try another category or try
+     again 😞
+    </h1>
+    <Button
+     onClick={() => navigate("/QuizPage")}
+     variant="contained"
+     sx={{ mt: 3, mb: 2, py: 1.5 }}
+    >
+     Go Back
+    </Button>
+   </div>
+  );
  }
 
  const handleQuiz = () => {

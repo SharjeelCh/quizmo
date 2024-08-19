@@ -9,6 +9,7 @@ import Quiz_Dialog from "../Components/Dialogg";
 import axios from "axios";
 import quizTypes2 from "../JSON/quizTypes2.json";
 import { returnQuizTypeNumber } from "../Functions/HelperFuncs";
+import { decode } from "html-entities";
 
 export const QuizMulti = () => {
  const navigate = useNavigate();
@@ -68,7 +69,15 @@ export const QuizMulti = () => {
      const options = [...quiz.incorrect_answers, quiz.correct_answer].sort(
       () => Math.random() - 0.5
      );
-     return { ...quiz, options };
+     const decodedQuiz = {
+      ...quiz,
+      question: decode(quiz.question),
+      correct_answer: decode(quiz.correct_answer),
+      incorrect_answers: quiz.incorrect_answers.map(decode),
+      options: options.map(decode),
+     };
+
+     return decodedQuiz;
     });
     setQuizes(fetchedQuizzes);
     setLoading(false);
@@ -82,6 +91,24 @@ export const QuizMulti = () => {
 
  if (permission && !hide) {
   return <Quiz_Dialog hide={setHide} />;
+ }
+
+ if (quizes.length === 0) {
+  return (
+   <div className="flex flex-col justify-center items-center h-dvh gap-4 mx-3">
+    <h1 className="text-2xl text-white text-wrap">
+     No questions available for this category Please try another category or try
+     again 😞
+    </h1>
+    <Button
+     onClick={() => navigate("/QuizPage")}
+     variant="contained"
+     sx={{ mt: 3, mb: 2, py: 1.5 }}
+    >
+     Go Back
+    </Button>
+   </div>
+  );
  }
 
  if (loading) {
