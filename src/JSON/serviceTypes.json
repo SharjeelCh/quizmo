@@ -1,5 +1,3 @@
 {
-    "serviceTypes":[
-        "About Us","Rankings","How to use us"
-    ]
+ "serviceTypes": ["About Us", "Rankings", "How to use us"]
 }

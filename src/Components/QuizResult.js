@@ -20,6 +20,7 @@ const QuizResult = () => {
  const location = useLocation();
  const navigate = useNavigate();
  const { quizes, userQuizData, score } = location.state;
+ console.log(userQuizData)
 
  const correctAnswers = quizes.reduce((total, quiz, index) => {
   if (quiz.correct_answer === userQuizData[index]) {

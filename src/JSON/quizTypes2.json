@@ -1,0 +1,28 @@
+{
+ "quizTypes": [
+  { "uid": 9, "name": "General Knowledge" },
+  { "uid": 10, "name": "Entertainment: Books" },
+  { "uid": 11, "name": "Entertainment: Film" },
+  { "uid": 12, "name": "Entertainment: Music" },
+  { "uid": 13, "name": "Entertainment: Musicals & Theatres" },
+  { "uid": 14, "name": "Entertainment: Television" },
+  { "uid": 15, "name": "Entertainment: Video Games" },
+  { "uid": 16, "name": "Entertainment: Board Games" },
+  { "uid": 17, "name": "Science & Nature" },
+  { "uid": 18, "name": "Science: Computers" },
+  { "uid": 19, "name": "Science: Mathematics" },
+  { "uid": 20, "name": "Mythology" },
+  { "uid": 21, "name": "Sports" },
+  { "uid": 22, "name": "Geography" },
+  { "uid": 23, "name": "History" },
+  { "uid": 24, "name": "Politics" },
+  { "uid": 25, "name": "Art" },
+  { "uid": 26, "name": "Celebrities" },
+  { "uid": 27, "name": "Animals" },
+  { "uid": 28, "name": "Vehicles" },
+  { "uid": 29, "name": "Entertainment: Comics" },
+  { "uid": 30, "name": "Science: Gadgets" },
+  { "uid": 31, "name": "Entertainment: Japanese Anime & Manga" },
+  { "uid": 32, "name": "Entertainment: Cartoon & Animations" }
+ ]
+}

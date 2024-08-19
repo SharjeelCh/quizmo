@@ -7,21 +7,42 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { findingCorrectAnswer, scoreLogic } from "../Functions/QuizLogic";
 import Quiz_Dialog from "../Components/Dialogg";
 import axios from "axios";
+import quizTypes2 from "../JSON/quizTypes2.json";
+import { returnQuizTypeNumber } from "../Functions/HelperFuncs";
 
 export const QuizMulti = () => {
- const navigate = useNavigate(); 
+ const navigate = useNavigate();
  const [showAlert, setShowAlert] = useState(false);
  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
  const [userQuizData, setuserQuizData] = useState({});
  const [quizType, setQuizType] = useState();
+ const [quizTypes, setTypes] = useState([]);
+ const [category, setCategory] = useState();
  const [loading, setLoading] = useState(false);
  const location = useLocation();
  const [permission, setPermission] = useState(true);
  const [hide, setHide] = useState(false);
  const { state: item } = location;
+
  useEffect(() => {
-  setQuizType(item.type === "Multi-choice" ? "multiple" : "boolean");
- }, [item]);
+  const fetchTypes = () => {
+   try {
+    setTypes(quizTypes2.quizTypes);
+   } catch (error) {
+    console.log(error);
+   }
+  };
+  fetchTypes();
+ }, []);
+
+ useEffect(() => {
+  if (quizTypes.length > 0 && item) {
+   const quizNum = returnQuizTypeNumber(item.quiz_type, quizTypes);
+   setCategory(quizNum);
+   console.log(quizNum);
+   setQuizType(item.type === "Multi-choice" ? "multiple" : "boolean");
+  }
+ }, [quizTypes, item]);
 
  const [quizes, setQuizes] = useState([]);
  const [increase, setIncrease] = useState(false);
@@ -40,7 +61,7 @@ export const QuizMulti = () => {
   if (!quizType) return;
   axios
    .get(
-    `https://opentdb.com/api.php?amount=${item.number_of_qs}&category=9&difficulty=${item.difficulty}&type=${quizType}`
+    `https://opentdb.com/api.php?amount=${item.number_of_qs}&category=${category}&difficulty=${item.difficulty}&type=${quizType}`
    )
    .then((response) => {
     const fetchedQuizzes = response.data.results.map((quiz) => {
