@@ -32,7 +32,7 @@ const createUserQuizData = expressAsyncHandler(async (req, res) => {
 });
 
 const getQuizData = expressAsyncHandler(async (req, res) => {
- const quizData = await QuizData.find({user_id: req.params.id});
+ const quizData = await QuizData.find({ user_id: req.params.id });
  if (!quizData) {
   res.status(400).json({ message: "Quiz Data not found" });
   throw new Error("Quiz Data not found");
@@ -40,4 +40,4 @@ const getQuizData = expressAsyncHandler(async (req, res) => {
  res.status(200).json(quizData);
 });
 
-module.exports = { createUserQuizData ,getQuizData};
+module.exports = { createUserQuizData, getQuizData };
