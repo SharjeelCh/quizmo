@@ -14,6 +14,7 @@ const transporter = nodeMalier.createTransport({
  },
 });
 
+
 const sendToken = asyncHandler(async (req, res) => {
  const token = crypto.randomBytes(20).toString("hex");
  const email = req.body.email;
@@ -27,7 +28,31 @@ const sendToken = asyncHandler(async (req, res) => {
   from: process.env.USER_EMAIL,
   to: email,
   subject: "Verification Token",
-  html: `Press <a href="http://localhost:${process.env.PORT}/verify/${token}">here</a> to verify your account`,
+  html: ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 10px; overflow: hidden;">
+            <div style="background-color: #007BFF; padding: 20px; text-align: center;">
+                <h1 style="color: #fff; margin: 0;">Welcome to Quizmo!</h1>
+            </div>
+            <div style="padding: 20px; background-color: #f9f9f9;">
+                <h2 style="color: #333;">Verify Your Account</h2>
+                <p style="color: #555; font-size: 16px; line-height: 1.6;">
+                    Thank you for signing up, Please verify your account by clicking the button below:
+                </p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="http://localhost:${process.env.PORT}/api/users/verify/${token}" style="background-color: #28A745; color: #fff; padding: 15px 25px; text-decoration: none; font-size: 18px; border-radius: 5px; display: inline-block;">
+                        Verify Account
+                    </a>
+                </div>
+                <p style="color: #555; font-size: 14px; line-height: 1.6;">
+                    Or you can copy and paste the following link into your browser:
+                </p>
+                <p style="color: #007BFF; font-size: 14px; word-break: break-all;">
+                    http://localhost:${process.env.PORT}/api/users/verify/${token}
+                </p>
+            </div>
+            <div style="background-color: #007BFF; padding: 10px; text-align: center;">
+                <p style="color: #fff; margin: 0;">&copy; 2024 Quizmo</p>
+            </div>
+        </div>`,
  };
 
  transporter.sendMail(info, (err, data) => {
@@ -112,4 +137,48 @@ const resetPassword = asyncHandler(async (req, res) => {
  if (checkUserinDB) {
  }
 });
-module.exports = { Signup, verifyToken, sendToken, Login };
+
+const sendMessage = asyncHandler(async (req, res) => {
+
+ const { email, username, message } = req.body;
+ if (!email || !username || !message) {
+  res.status(400);
+  throw new Error("All fields are required");
+ }
+ var info = {
+  from: email,
+  to: process.env.USER_EMAIL,
+  replyTo: email,
+  subject: `Message from ${username}, dedicated player of Quizmo`,
+  html: `
+   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 10px; overflow: hidden;">
+            <div style="background-color: #4CAF50; padding: 20px; text-align: center;">
+                <h1 style="color: #fff; margin: 0;">You've Got a New Message!</h1>
+            </div>
+            <div style="padding: 20px; background-color: #f9f9f9;">
+                <h2 style="color: #333;">Hello, you have a message from ${username}</h2>
+                <p style="color: #555; font-size: 16px; line-height: 1.6;">
+                    ${message}
+                </p>
+                <p style="color: #888; font-size: 14px; text-align: right;">
+                    <em>Sender's Email: <a href="mailto:${email}" style="color: #4CAF50;">${email}</a></em>
+                </p>
+            </div>
+            <div style="background-color: #4CAF50; padding: 10px; text-align: center;">
+                <p style="color: #fff; margin: 0;">&copy; 2024 Quizmo</p>
+            </div>
+        </div>
+  `,
+ };
+ transporter.sendMail(info, (err, data) => {
+  if (err) {
+   console.log(err);
+   res.status(500).json({ message: "Error sending email" });
+  } else {
+   console.log("Email sent");
+   res.status(200).json({ message: "Message sent" });
+  }
+ });
+});
+
+module.exports = { Signup, verifyToken, sendToken, Login ,sendMessage};

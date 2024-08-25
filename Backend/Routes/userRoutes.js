@@ -5,6 +5,7 @@ const {
  verifyToken,
  Signup,
  Login,
+ sendMessage,
 } = require("../Controllers/userController");
 const {
  createUserQuizData,
@@ -19,6 +20,7 @@ router.post("/login", Login);
 router.post("/insertQuiz/:id", createUserQuizData);
 router.get("/getQuizData/:id", getQuizData);
 router.get("/getQuizDataByCat/:id", getQuizDataByCat);
-router.get("/getNumOfPlayers",getPlayersNumber);
+router.get("/getNumOfPlayers", getPlayersNumber);
+router.post("/sendMessage",sendMessage);
 
 module.exports = router;
