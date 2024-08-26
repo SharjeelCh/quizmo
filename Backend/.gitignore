@@ -10,6 +10,7 @@
 
 # production
 /build
+/.env
 
 /Backend/node_modules
 /Backedn/.env
