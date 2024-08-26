@@ -1,13 +1,18 @@
-import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
-import Navigation from './Screens/Navigation'
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navigation from "./Screens/Navigation";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
 
 function App() {
-  return (
-    <Router>
-      <Navigation/>
-    </Router>
-  )
+ return (
+  <QueryClientProvider client={queryClient}>
+   <Router>
+    <Navigation />
+   </Router>
+  </QueryClientProvider>
+ );
 }
 
-export default App
+export default App;
