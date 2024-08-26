@@ -14,7 +14,6 @@ const transporter = nodeMalier.createTransport({
  },
 });
 
-
 const sendToken = asyncHandler(async (req, res) => {
  const token = crypto.randomBytes(20).toString("hex");
  const email = req.body.email;
@@ -82,14 +81,32 @@ const verifyToken = asyncHandler(async (req, res) => {
 });
 
 const Signup = asyncHandler(async (req, res) => {
+ const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail.com$/;
+ const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
  const { username, email, password } = req.body;
+
  if (!username || !email || !password) {
   res.status(400);
   throw new Error("All fields are required");
  }
+ if (!gmailRegex.test(email)) {
+  res.status(400).json({ message: "Invalid email" });
+  throw new Error("Invalid email");
+ }
+ if (!passwordRegex.test(password)) {
+  res
+   .status(400)
+   .json({
+    message:
+     "Password must contain at least 8 characters, including uppercase, lowercase letters and numbers",
+   });
+  throw new Error(
+   "Password must contain at least 8 characters, including uppercase, lowercase letters and numbers"
+  );
+ }
  const checkAlreadyUser = await User.findOne({ email });
  if (checkAlreadyUser) {
-  res.status(400);
+  res.status(400).json({ message: "User already exists" });
   throw new Error("User already exists");
  }
  const newUser = new User({
@@ -115,9 +132,10 @@ const Login = asyncHandler(async (req, res) => {
  if (checkUserinDB) {
   if (isVerified) {
    if (checkUserinDB.password === password) {
-    res.status(200).json({ message: "User logged in", data: checkUserinDB });
+    checkUserinDB.password = undefined;
+    res.status(200).json({ message: "User logged in", data: checkUserinDB});
    } else {
-    res.status(400).json({ message: "Invalid password" });
+    res.status(400).json({ message: "Invalid email or password" });
    }
   } else {
    res.status(400).json({ message: "User not verified" });
@@ -139,7 +157,6 @@ const resetPassword = asyncHandler(async (req, res) => {
 });
 
 const sendMessage = asyncHandler(async (req, res) => {
-
  const { email, username, message } = req.body;
  if (!email || !username || !message) {
   res.status(400);
@@ -181,4 +198,4 @@ const sendMessage = asyncHandler(async (req, res) => {
  });
 });
 
-module.exports = { Signup, verifyToken, sendToken, Login ,sendMessage};
+module.exports = { Signup, verifyToken, sendToken, Login, sendMessage };
