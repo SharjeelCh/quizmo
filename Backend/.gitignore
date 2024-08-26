@@ -10,10 +10,10 @@
 
 # production
 /build
-/.env
+/Backend/.env
 
 /Backend/node_modules
-/Backedn/.env
+/Backend/.env
 
 # misc
 .DS_Store
