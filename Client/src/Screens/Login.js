@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { IoLogoGoogle } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { message, Spin } from "antd";
@@ -10,9 +10,24 @@ import useStore from "../useStore";
 
 function Login() {
  const { user, setUser } = useStore();
+ const navigate = useNavigate();
  const mutation = useMutation({
   mutationFn: (data) => {
    return axios.post("http://localhost:5002/api/users/login/", data);
+  },
+  onSuccess: (data) => {
+   setUser({
+    email: data.data.data.email,
+    username: data.data.data.username,
+    user_id: data.data.data._id,
+    isLogged: true,
+   });
+   message.success("User logged in successfully");
+   console.log(data.data.data);
+   navigate("/");
+  },
+  onError: (error) => {
+   message.error(error.response?.data?.message || "An error occurred");
   },
  });
 
@@ -27,21 +42,12 @@ function Login() {
   }
   mutation.mutate({ email: email, password: password });
 
-  mutation.isSuccess &&
-   setUser({
-    email: mutation.data.data.data.email,
-    username: mutation.data.data.data.username,
-    user_id: mutation.data.data.data._id,
-   });
+  mutation.isSuccess && navigate("/");
  };
  return (
   <div className="flex flex-col sm:flex-row h-screen my-3 sm:m-12 overflow-hidden items-center ">
    {mutation.isPending && <Spin size="large" style={styles.spinContainer} />}
-   {mutation.isError &&
-    message.error(
-     mutation.error.response?.data?.message || "An error occurred"
-    )}
-   {mutation.isSuccess && message.success("User logged in successfully")}
+
    <div className="flex flex-col h-fit sm:h-full w-full bg-gradient-to-r from-slate-400 to-blue-500 border-4 border-glass backdrop-blur-md rounded-t-3xl sm:rounded-l-3xl sm:rounded-tr-none justify-center items-center  p-3 sm:p-12 gap-y-8">
     <Link to={"/"}>
      <img

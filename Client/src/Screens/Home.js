@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo2 from "../assets/logo2.png";
 import quizTypes from "../JSON/quizTypes.json";
-import {
- handlegoToLogin,
- handlegoToSignup,
- truncateText,
-} from "../Functions/HelperFuncs";
+import { truncateText } from "../Functions/HelperFuncs";
 import Card from "../Components/Card";
 import img1 from "../assets/1.jpg";
 import img2 from "../assets/2.jpg";
@@ -14,11 +10,13 @@ import img4 from "../assets/4.jpg";
 import img5 from "../assets/5.jpg";
 import img6 from "../assets/6.webp";
 import { Link, useNavigate } from "react-router-dom";
+import useStore from "../useStore";
 
 function Home() {
  const [types, setTypes] = useState();
  const [show, setshow] = useState(false);
  const navigate = useNavigate();
+ const { user, setUser } = useStore();
 
  useEffect(() => {
   setshow(true);
@@ -39,23 +37,25 @@ function Home() {
 
  return (
   <div className="flex flex-col">
-   <div className="flex flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
-    <p className="text-sm sm:text-sm md:text-base lg:text-sm font-bold mr-2">
-     Free!
-    </p>
-    <p className="text-sm sm:text-sm md:text-base lg:text-sm mr-2">
-     Click here to
-    </p>
-    <Link
-     className="text-sm sm:text-sm md:text-base lg:text-sm mr-2 text-blue-600 hover:text-blue-900"
-     to={"/Login"}
-    >
-     Join QuizMo
-    </Link>
-    <p className="text-sm sm:text-sm md:text-base lg:text-sm">
-     Thousands of games, quizzes, and lots more!
-    </p>
-   </div>
+   {user?.isLogged === false && (
+    <div className="flex flex-col sm:flex-row h-fit sm:h-fit md:h-fit lg:h-fit bg-white rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center mt-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
+     <p className="text-sm sm:text-sm md:text-base lg:text-sm font-bold mr-2">
+      Free!
+     </p>
+     <p className="text-sm sm:text-sm md:text-base lg:text-sm mr-2">
+      Click here to
+     </p>
+     <Link
+      className="text-sm sm:text-sm md:text-base lg:text-sm mr-2 text-blue-600 hover:text-blue-900"
+      to={"/Login"}
+     >
+      Join QuizMo
+     </Link>
+     <p className="text-sm sm:text-sm md:text-base lg:text-sm">
+      Thousands of games, quizzes, and lots more!
+     </p>
+    </div>
+   )}
 
    <div className="flex sm:flex-row h-fit gap-10 bg-gradient-to-t from-white to-blue-200 rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg items-center my-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
     <img
@@ -66,21 +66,32 @@ function Home() {
      <p className="text-app-bg font-bold text-3xl">
       The World's Greatest Trivia Game
      </p>
-     <div>
-      <Link
-       className="text-pinkish font-semibold hover:text-pink-900"
-       to={"/Signup"}
-      >
-       New User
-      </Link>
-      <p>or</p>
-      <Link
-       className="text-purple-950 font-semibold hover:text-purple-800"
-       to={"/Login"}
-      >
-       Login
-      </Link>
-     </div>
+     {user?.isLogged ? (
+      <div>
+       <div className="text-pinkish font-semibold hover:text-pink-900">
+        Hello
+       </div>
+       <div className="text-purple-950 font-semibold hover:text-purple-800">
+        {user?.username}
+       </div>
+      </div>
+     ) : (
+      <div>
+       <Link
+        className="text-pinkish font-semibold hover:text-pink-900"
+        to={"/Signup"}
+       >
+        New User
+       </Link>
+       <p>or</p>
+       <Link
+        className="text-purple-950 font-semibold hover:text-purple-800"
+        to={"/Login"}
+       >
+        Login
+       </Link>
+      </div>
+     )}
     </div>
    </div>
 

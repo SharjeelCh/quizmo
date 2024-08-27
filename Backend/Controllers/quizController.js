@@ -4,14 +4,20 @@ const userModal = require("../Modals/userModal");
 const quizModal = require("../Modals/quizModal");
 
 const createUserQuizData = expressAsyncHandler(async (req, res) => {
- const { quizInfo } = req.body;
- if (!quizInfo || !quizInfo[0]) {
+ const { type, quizType, difficulty, totalQuestions, correct_answers, score } =
+  req.body;
+
+ if (
+  !type ||
+  !quizType ||
+  !difficulty ||
+  !totalQuestions ||
+  !correct_answers ||
+  !score
+ ) {
   res.status(400);
   throw new Error("All fields are required");
  }
- const { type, quizType, difficulty, totalQuestions, correct_answers, score } =
-  quizInfo[0];
-
  const checkQuizData = await QuizData.findOne({ user_id: req.params.id });
  if (checkQuizData) {
   checkQuizData.totalScore += score;
@@ -78,22 +84,28 @@ const getPlayersNumber = expressAsyncHandler(async (req, res) => {
 });
 
 const rankPlayers = expressAsyncHandler(async (req, res) => {
- const players = await quizModal.find().sort({ totalScore: -1 });
- const username = await userModal.find(players.user_id);
-
- const userData = username.map((item) => ({
-  user_id: item._id,
-  username: item.username,
- }));
-
- const playersData = players.map((item, index) => ({
-  totalScore: item.totalScore,
-  rank: index + 1,
-  username: userData[index].username,
- }));
- res.json(playersData);
-});
-
+    try {
+      const players = await quizModal.find().sort({ totalScore: -1 });
+      
+      const users = await userModal.find();
+      
+      const userMap = users.reduce((map, user) => {
+        map[user._id] = user.username;
+        return map;
+      }, {});
+  
+      const playersData = players.map((player, index) => ({
+        totalScore: player.totalScore,
+        rank: index + 1,
+        username: userMap[player.user_id],
+      }));
+  
+      res.json(playersData);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
 module.exports = {
  createUserQuizData,
  getQuizData,

@@ -10,6 +10,10 @@ import { FaBars } from "react-icons/fa";
 import { useSpring, animated } from "react-spring";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Box, Input, TextField } from "@mui/material";
+import useStore from "../useStore";
+import { message } from "antd";
+
+import Popper from "../Components/Popper";
 
 function QuizPage() {
  const [types, setTypes] = useState();
@@ -20,7 +24,8 @@ function QuizPage() {
  const location = useLocation();
  const [showan, setshowan] = useState(false);
  const { state: item } = location;
-
+ const { user } = useStore();
+ const [showPopper, setShowPopper] = useState(false);
  const props = useSpring({
   opacity: show ? 1 : 0,
   transform: show ? "translateY(0)" : "translateY(10px)",
@@ -47,7 +52,7 @@ function QuizPage() {
 
  return (
   <div className="flex flex-col">
-   {<JoinComp />}
+   {user?.isLogged === false && <JoinComp />}
 
    <div className="flex sm:flex-row sm:flex-wrap w-full flex-wrap h-fit justify-around gap-10 bg-gradient-to-t from-white to-blue-200 rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg my-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
     <div className={`${show ? "animate-slide-from-left" : ""}`}>
@@ -179,11 +184,15 @@ function QuizPage() {
       >
        {JSON.stringify(item).replace(/"/g, "")}
       </div>
+      {showPopper&&<Popper open={showPopper} setOpen={setShowPopper}/>}
       <Box
        className="flex flex-col flex-wrap mt-2"
        component={"form"}
        onSubmit={(e) => {
         e.preventDefault();
+        if(user?.isLogged===false){
+          setShowPopper(!showPopper);
+        }
         const data = new FormData(e.currentTarget);
         const inputs = {
          number_of_qs: data.get("number"),
@@ -193,7 +202,7 @@ function QuizPage() {
         };
         inputs.number_of_qs
          ? navigate(`/${inputs.type}`, { state: inputs })
-         : alert("Please enter number of questions");
+         : message.error("Please fill in all fields");
        }}
       >
        <strong className="text-black mb-2 text-wrap">

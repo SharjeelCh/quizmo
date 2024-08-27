@@ -5,6 +5,9 @@ import serviceTypes from "../JSON/serviceTypes.json";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { type } from "@testing-library/user-event/dist/type";
+import useStore from "../useStore";
+import { Avatar, Button } from "antd";
+import { stringToColor, stringAvatar } from "../Functions/HelperFuncs";
 
 function Tabbar() {
  const [showQuizzesMenu, setShowQuizzesMenu] = useState(false);
@@ -13,6 +16,8 @@ function Tabbar() {
  const navigate = useNavigate();
  const [Services, setservices] = useState();
  const [show, setshow] = useState(false);
+ const { user, setUser ,logout} = useStore();
+
  const handleQuizzesEnter = () => {
   setShowQuizzesMenu(true);
  };
@@ -34,7 +39,6 @@ function Tabbar() {
    try {
     setTypes(quizTypes.quizTypes);
     setservices(serviceTypes.serviceTypes);
-    console.log("types: ", types);
    } catch (error) {
     console.log(error);
    }
@@ -112,7 +116,7 @@ function Tabbar() {
           key={index}
           onClick={() => {
            navigate(`/${item}`);
-           console.log("item:",item);
+           console.log("item:", item);
           }}
          >
           {Object.values(item)}
@@ -121,25 +125,56 @@ function Tabbar() {
       </div>
      )}
     </div>
-    <button className="text-white text-sm mr-2 sm:text-base md:text-lg lg:text-xl hover:border-b-2 hover:border-white border-b-2 border-transparent transition-all hover:text-blue-200"
-    onClick={()=>{navigate("/Contact")}}
+    <button
+     className="text-white text-sm mr-2 sm:text-base md:text-lg lg:text-xl hover:border-b-2 hover:border-white border-b-2 border-transparent transition-all hover:text-blue-200"
+     onClick={() => {
+      navigate("/Contact");
+     }}
     >
      Contact
     </button>
    </div>
    <div className="flex flex-row gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-    <Link
-     className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-200"
-     to={"/Login"}
-    >
-     Login
-    </Link>
-    <Link
-     className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-200"
-     to={"/Signup"}
-    >
-     Sign Up
-    </Link>
+    {user?.isLogged ? (
+     <>
+      <Avatar
+       {...stringAvatar(user?.username)}
+       style={{ cursor: "pointer" }}
+       onClick={() => setshow(!show)}
+      />
+      {show && (
+       <Button className="fixed top-20 sm:top-14 md:sm:top-14 lg:sm:top-14 xl:sm:top-14 transition-all"
+       onClick={()=>{
+        logout();
+        setUser({
+          isLogged:false,
+          username:"",
+          email:"",
+          user_id:""
+        })
+        navigate("/");
+       }}
+       >
+        Logout
+       </Button>
+      )}
+     </>
+    ) : (
+     <div className="flex flex-row gap-4 sm:gap-5 md:gap-6 lg:gap-8">
+      <Link
+       className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-200"
+       to={"/Login"}
+      >
+       Login
+      </Link>
+      <Link
+       className="text-white text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-200"
+       to={"/Signup"}
+      >
+       Sign Up
+      </Link>
+     </div>
+    )}
    </div>
   </div>
  );

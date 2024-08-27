@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
  Box,
@@ -15,12 +15,15 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import useStore from "../useStore";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 const QuizResult = () => {
  const location = useLocation();
  const navigate = useNavigate();
+ const { user } = useStore();
  const { quizes, userQuizData, score } = location.state;
- console.log(userQuizData)
 
  const correctAnswers = quizes.reduce((total, quiz, index) => {
   if (quiz.correct_answer === userQuizData[index]) {
@@ -28,6 +31,15 @@ const QuizResult = () => {
   }
   return total;
  }, 0);
+
+ const mutation = useMutation({
+  mutationFn: (data) => {
+   return axios.post(
+    `http://localhost:5002/api/users/insertQuiz/${user.user_id}`,
+    data
+   );
+  },
+ });
 
  const scorePercentage = (correctAnswers / quizes.length) * 100;
 
@@ -40,6 +52,23 @@ const QuizResult = () => {
    return <SentimentDissatisfiedIcon color="warning" fontSize="large" />;
   return <SentimentVeryDissatisfiedIcon color="error" fontSize="large" />;
  };
+
+ const hasRun = useRef(false);
+
+ useEffect(() => {
+  if (!hasRun.current) {
+   hasRun.current = true;
+   console.log("Effect ran");
+   mutation.mutate({
+    type: quizes[0].type,
+    quizType: quizes[0].category,
+    difficulty: quizes[0].difficulty,
+    totalQuestions: quizes.length,
+    correct_answers: correctAnswers,
+    score: score,
+   });
+  }
+ }, []);
 
  return (
   <Box
