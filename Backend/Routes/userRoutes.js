@@ -12,6 +12,7 @@ const {
  getQuizData,
  getQuizDataByCat,
  getPlayersNumber,
+ rankPlayers,
 } = require("../Controllers/quizController");
 
 router.post("/signup", Signup);
@@ -22,5 +23,6 @@ router.get("/getQuizData/:id", getQuizData);
 router.get("/getQuizDataByCat/:id", getQuizDataByCat);
 router.get("/getNumOfPlayers", getPlayersNumber);
 router.post("/sendMessage",sendMessage);
+router.get("/rank",rankPlayers);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const expressAsyncHandler = require("express-async-handler");
 const QuizData = require("../Modals/quizModal");
 const userModal = require("../Modals/userModal");
+const quizModal = require("../Modals/quizModal");
 
 const createUserQuizData = expressAsyncHandler(async (req, res) => {
  const { quizInfo } = req.body;
@@ -13,6 +14,7 @@ const createUserQuizData = expressAsyncHandler(async (req, res) => {
 
  const checkQuizData = await QuizData.findOne({ user_id: req.params.id });
  if (checkQuizData) {
+  checkQuizData.totalScore += score;
   checkQuizData.quizInfo.push({
    type,
    quizType,
@@ -26,6 +28,7 @@ const createUserQuizData = expressAsyncHandler(async (req, res) => {
  } else {
   const newQuizData = new QuizData({
    user_id: req.params.id,
+   totalScore: score,
    quizInfo: [
     {
      type,
@@ -74,9 +77,27 @@ const getPlayersNumber = expressAsyncHandler(async (req, res) => {
  res.json(numOfPlayers);
 });
 
+const rankPlayers = expressAsyncHandler(async (req, res) => {
+ const players = await quizModal.find().sort({ totalScore: -1 });
+ const username = await userModal.find(players.user_id);
+
+ const userData = username.map((item) => ({
+  user_id: item._id,
+  username: item.username,
+ }));
+
+ const playersData = players.map((item, index) => ({
+  totalScore: item.totalScore,
+  rank: index + 1,
+  username: userData[index].username,
+ }));
+ res.json(playersData);
+});
+
 module.exports = {
  createUserQuizData,
  getQuizData,
  getQuizDataByCat,
  getPlayersNumber,
+ rankPlayers,
 };
