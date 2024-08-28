@@ -1,28 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
+import useStore from "../useStore";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { message, Spin } from "antd";
+import Popper from "../Components/Popper";
+import { styles } from "../Styles/loader";
 
 const Contact = () => {
+ const { user } = useStore();
+ const [showPopper, setShowPopper] = useState(false);
+
+ const mutation = useMutation({
+  mutationFn: (data) => {
+   axios.post("http://localhost:5002/api/users/sendMessage", data);
+  },
+  onSuccess: () => {
+   message.success("Message sent successfully. We will get back to you soon");
+  },
+  onError: () => {
+   message.error("Failed to send message");
+  },
+ });
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  const inputs = new FormData(e.target);
+  const data = {
+   email: inputs.get("email"),
+   username: inputs.get("name"),
+   message: inputs.get("message"),
+  };
+  if (!data.message) {
+   message.error("Please fill all the fields");
+   return;
+  }
+  if (user.isLogged) mutation.mutate(data);
+  else {
+   setShowPopper(!showPopper);
+  }
+ };
+ console.log(user);
  return (
   <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center mt-2 rounded-t-2xl">
    <div className="w-full max-w-lg p-8 bg-white shadow-md rounded-lg text-center">
+    {mutation.isPending && <Spin size="large" style={styles.spinContainer} />}
+    {showPopper && <Popper open={showPopper} setOpen={setShowPopper} />}
     <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
     <p className="text-gray-600 mb-6">
      Any questions or remarks? Just write us a message!
     </p>
-    <form className="space-y-4">
+    <form className="space-y-4" onSubmit={handleSubmit}>
      <div className="grid grid-cols-2 gap-4">
       <input
        type="email"
+       name="email"
+       {...(user.isLogged && { value: user.email })}
+       readOnly={user?.isLogged && true}
        placeholder="Enter a valid email address"
        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
       />
       <input
        type="text"
+       name="name"
+       {...(user.isLogged && { value: user.username })}
+       readOnly={user?.isLogged && true}
        placeholder="Enter your Name"
        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
       />
      </div>
      <input
       type="text"
+      name="message"
       placeholder="Enter your message"
       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
      />

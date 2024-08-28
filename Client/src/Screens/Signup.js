@@ -70,12 +70,7 @@ function Signup() {
      onSubmit={handleSubmit}
     >
      <p className="font-bold text-3xl">Get Started with</p>
-     <button className="flex flex-row border-2 w-fit px-2 py-1 text-wrap rounded-2xl hover:bg-slate-200 transition-colors gap-1">
-      <IoLogoGoogle className="text-2xl text-green-500 text-wrap" />
-      <p className="hidden sm:block">Register with Google</p>
-      <p className="block sm:hidden">Google</p>
-     </button>
-     <p className="text-center">or</p>
+    
 
      <p className="font-semibold text-sm">Your Name:</p>
      <input

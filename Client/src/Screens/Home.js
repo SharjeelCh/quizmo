@@ -10,7 +10,7 @@ import img3 from "../assets/3.jpg";
 import img4 from "../assets/4.jpg";
 import img5 from "../assets/5.jpg";
 import img6 from "../assets/6.webp";
-
+import { Spin } from "antd";
 
 const Card = lazy(() => import("../Components/Card"));
 
@@ -36,7 +36,6 @@ function Home() {
 
  return (
   <div className="flex flex-col">
-   {/* Authentication Section */}
    {user?.isLogged === false && (
     <div className="flex flex-col sm:flex-row h-fit bg-white rounded-md items-center mt-2 p-2">
      <p className="text-sm font-bold mr-2">Free!</p>
@@ -44,7 +43,7 @@ function Home() {
      <Link className="text-sm text-blue-600 hover:text-blue-900" to={"/Login"}>
       Join QuizMo
      </Link>
-     <p className="text-sm">Thousands of games, quizzes, and lots more!</p>
+     <p className="text-sm ml-1">Thousands of games, quizzes, and lots more!</p>
     </div>
    )}
 
@@ -187,9 +186,9 @@ function Home() {
        <p>playing</p>
       </div>
       <div className="flex flex-row items-center gap-1 mt-1">
-       <button className="text-blue-600 hover:text-blue-900">
+       <Link className="text-blue-600 hover:text-blue-900" to={"/History"}>
         Activity Feed
-       </button>
+       </Link>
       </div>
      </div>
      <div>
@@ -216,30 +215,35 @@ function Home() {
       </div>
      </div>
     </div>
-     <div className="flex-1 w-full flex-col">
-      <div>
-       <div
-        className={`${
-         show ? "animate-slide-from-right" : ""
-        } bg-blue-200 font-bold text-lg rounded-t-md px-2 py-1`}
-       >
-        Start Your Journey!
-       </div>
-       <div className="flex flex-row items-start gap-1 mt-1 flex-wrap">
-        <p className="whitespace-nowrap text-lg">Adventure through the</p>
-        <p className="whitespace-nowrap font-bold text-lg">
-         Realms of Knowledge
-        </p>
-        <p className="whitespace-normal flex-grow text-lg">
-         with - and against - thousands of other players from around the world!
-         Answer questions, play games, join teams, and climb the ranks!
-        </p>
-        <p className="font-bold text-lg">FOR FREE!</p>
-        <p className="text-lg">Click here to get started!</p>
-       </div>
+    <div className="flex-1 w-full flex-col">
+     <div>
+      <div
+       className={`${
+        show ? "animate-slide-from-right" : ""
+       } bg-blue-200 font-bold text-lg rounded-t-md px-2 py-1`}
+      >
+       Start Your Journey!
       </div>
-      <Suspense fallback={<div>Loading Cards...</div>}>
-
+      <div className="flex flex-row items-start gap-1 mt-1 flex-wrap">
+       <p className="whitespace-nowrap text-lg">Adventure through the</p>
+       <p className="whitespace-nowrap font-bold text-lg">
+        Realms of Knowledge
+       </p>
+       <p className="whitespace-normal flex-grow text-lg">
+        with - and against - thousands of other players from around the world!
+        Answer questions, play games, join teams, and climb the ranks!
+       </p>
+       <p className="font-bold text-lg">FOR FREE!</p>
+       <p className="text-lg">Click here to get started!</p>
+      </div>
+     </div>
+     <Suspense
+      fallback={
+       <div className="flex justify-center items-center ">
+        <Spin size="large" style={{ top: 20 }} />
+       </div>
+      }
+     >
       <div className="flex flex-row flex-wrap justify-start gap-12">
        <Card
         text={"General Knowledge"}
@@ -272,10 +276,40 @@ function Home() {
         className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
        />
       </div>
-      </Suspense>
+     </Suspense>
+    </div>
+   </div>
+   <div className="flex flex-col h-fit bg-white rounded-md items-start mt-2 p-2">
+    <div className="flex flex-grow sm:flex-row w-full justify-start items-center space-y-2 sm:space-y-0 sm:space-x-4 gap-x-2">
+     <button
+      className="w-full sm:w-auto text-blue-600 hover:text-blue-900 text-md"
+      onClick={() => {
+       navigate("/About Us");
+      }}
+     >
+      QuizMo-FAQ
+     </button>
 
-
-     </div>
+     <button
+      className="w-full sm:w-auto text-blue-600 hover:text-blue-900 text-md"
+      onClick={() => {
+       navigate("/Contact");
+      }}
+     >
+      Help / Contact Us
+     </button>
+     <button
+      className="w-full sm:w-auto text-blue-600 hover:text-blue-900 text-md"
+      onClick={() => {
+       navigate("/About Us");
+      }}
+     >
+      Conditions of use
+     </button>
+    </div>
+    <div className="text-md flex flex-grow mt-2">
+     Copyright 2024 QuizMo, Inc. All Rights Reserved.
+    </div>
    </div>
   </div>
  );

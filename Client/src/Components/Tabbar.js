@@ -16,7 +16,7 @@ function Tabbar() {
  const navigate = useNavigate();
  const [Services, setservices] = useState();
  const [show, setshow] = useState(false);
- const { user, setUser ,logout} = useStore();
+ const { user, setUser, logout } = useStore();
 
  const handleQuizzesEnter = () => {
   setShowQuizzesMenu(true);
@@ -53,7 +53,10 @@ function Tabbar() {
      className="text-white text-sm sm:text-base md:text-lg lg:text-xl justify-evenly items-center flex flex-row gap-3"
      to={"/"}
     >
-     <img src={logo} className="w-7 h-7" />
+     <img
+      src={logo}
+      className="w-7 h-7 hidden sm:block md:block lg:block xl:block "
+     />
      QuizMo
     </Link>
     <div
@@ -143,17 +146,18 @@ function Tabbar() {
        onClick={() => setshow(!show)}
       />
       {show && (
-       <Button className="fixed top-20 sm:top-14 md:sm:top-14 lg:sm:top-14 xl:sm:top-14 transition-all"
-       onClick={()=>{
-        logout();
-        setUser({
-          isLogged:false,
-          username:"",
-          email:"",
-          user_id:""
-        })
-        navigate("/");
-       }}
+       <Button
+        className="fixed top-20 sm:top-14 md:sm:top-14 lg:sm:top-14 xl:sm:top-14 transition-all"
+        onClick={() => {
+         logout();
+         setUser({
+          isLogged: false,
+          username: "",
+          email: "",
+          user_id: "",
+         });
+         navigate("/");
+        }}
        >
         Logout
        </Button>

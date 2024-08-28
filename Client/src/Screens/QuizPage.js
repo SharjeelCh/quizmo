@@ -57,8 +57,8 @@ function QuizPage() {
    <div className="flex sm:flex-row sm:flex-wrap w-full flex-wrap h-fit justify-around gap-10 bg-gradient-to-t from-white to-blue-200 rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg my-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
     <div className={`${show ? "animate-slide-from-left" : ""}`}>
      <img
-      src={img}
-      className="w-28 h-28 sm:w-32 md:w-36 lg:w-40 sm:h-32 md:h-36 lg:h-40 rounded-lg"
+     src="https://cdn.pixabay.com/photo/2018/01/14/22/59/cartoon-3082809_1280.png"
+      className="w-28 h-28 sm:w-36 md:w-40 lg:w-40 sm:h-36 md:h-40 lg:h-40 rounded-lg"
      />
     </div>
     <div className="flex-wrap">

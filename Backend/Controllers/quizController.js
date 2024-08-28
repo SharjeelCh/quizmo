@@ -62,7 +62,7 @@ const getQuizData = expressAsyncHandler(async (req, res) => {
 
 const getQuizDataByCat = expressAsyncHandler(async (req, res) => {
  const user_id = req.params.id;
- const quizType = req.body.quizType;
+ const quizType = req.query.quizType;
  const quizData = await QuizData.findOne({
   user_id: user_id,
  });
@@ -84,28 +84,28 @@ const getPlayersNumber = expressAsyncHandler(async (req, res) => {
 });
 
 const rankPlayers = expressAsyncHandler(async (req, res) => {
-    try {
-      const players = await quizModal.find().sort({ totalScore: -1 });
-      
-      const users = await userModal.find();
-      
-      const userMap = users.reduce((map, user) => {
-        map[user._id] = user.username;
-        return map;
-      }, {});
-  
-      const playersData = players.map((player, index) => ({
-        totalScore: player.totalScore,
-        rank: index + 1,
-        username: userMap[player.user_id],
-      }));
-  
-      res.json(playersData);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  });
-  
+ try {
+  const players = await quizModal.find().sort({ totalScore: -1 });
+
+  const users = await userModal.find();
+
+  const userMap = users.reduce((map, user) => {
+   map[user._id] = user.username;
+   return map;
+  }, {});
+
+  const playersData = players.map((player, index) => ({
+   totalScore: player.totalScore,
+   rank: index + 1,
+   username: userMap[player.user_id],
+  }));
+
+  res.json(playersData);
+ } catch (error) {
+  res.status(500).json({ message: error.message });
+ }
+});
+
 module.exports = {
  createUserQuizData,
  getQuizData,
