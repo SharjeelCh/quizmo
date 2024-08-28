@@ -57,7 +57,7 @@ const History = () => {
 
  return (
   <HistoryWrapper>
-   {user.isLogged ? (
+   {user?.isLogged ? (
     <SelectWrapper>
      <Select
       defaultValue="All"
@@ -74,7 +74,7 @@ const History = () => {
    ) : (
     <Popper open={showPopper} setOpen={setShowPopper} />
    )}
-   {loading && user.isLogged ? (
+   {loading && user?.isLogged ? (
     <Loader>
      <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     </Loader>
