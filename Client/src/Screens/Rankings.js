@@ -18,7 +18,7 @@ const Rankings = () => {
  const { user } = useStore();
 
  const mutation = useMutation({
-  mutationFn: () => axios.get(`http://localhost:5002/api/users/rank`),
+  mutationFn: () => axios.get(`https://quizmo-six.vercel.app/api/users/rank`),
   onSuccess: (data) => {
    const rankings = data.data;
    setTotalRanking(rankings);

@@ -12,7 +12,7 @@ function Login() {
  const navigate = useNavigate();
  const mutation = useMutation({
   mutationFn: (data) => {
-   return axios.post("http://localhost:5002/api/users/login/", data);
+   return axios.post("https://quizmo-six.vercel.app/api/users/login/", data);
   },
   onSuccess: (data) => {
    setUser({

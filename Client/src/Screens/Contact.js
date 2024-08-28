@@ -12,7 +12,7 @@ const Contact = () => {
 
  const mutation = useMutation({
   mutationFn: async (data) => {
-   await axios.post("http://localhost:5002/api/users/sendMessage", data);
+   await axios.post("https://quizmo-six.vercel.app/api/users/sendMessage", data);
   },
   onSuccess: () => {
    message.success("Message sent successfully. We will get back to you soon");

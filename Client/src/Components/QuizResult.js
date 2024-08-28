@@ -35,7 +35,7 @@ const QuizResult = () => {
  const mutation = useMutation({
   mutationFn: (data) => {
    return axios.post(
-    `http://localhost:5002/api/users/insertQuiz/${user.user_id}`,
+    `https://quizmo-six.vercel.app/api/users/insertQuiz/${user.user_id}`,
     data
    );
   },

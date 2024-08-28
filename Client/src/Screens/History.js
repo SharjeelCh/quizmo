@@ -23,7 +23,7 @@ const History = () => {
 
  const fetchAllHistory = useMutation({
   mutationFn: () =>
-   axios.get(`http://localhost:5002/api/users/getQuizData/${user.user_id}`),
+   axios.get(`https://quizmo-six.vercel.app/api/users/getQuizData/${user.user_id}`),
   onSuccess: (data) => {
    setFilteredData(data.data.map((item) => item.quizInfo).flat());
    setLoading(false);
@@ -33,7 +33,7 @@ const History = () => {
  const fetchHistoryByType = useMutation({
   mutationFn: (quizType) =>
    axios.get(
-    `http://localhost:5002/api/users/getQuizDataByCat/${user.user_id}/`,
+    `https://quizmo-six.vercel.app/api/users/getQuizDataByCat/${user.user_id}/`,
     { params: { quizType } }
    ),
   onSuccess: (data) => {
