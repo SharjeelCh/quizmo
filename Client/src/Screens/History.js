@@ -6,7 +6,6 @@ import quizTypes from "../JSON/quizTypes.json";
 import { Card, Empty, Select, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Popper from "../Components/Popper";
 
 const { Option } = Select;
@@ -89,7 +88,7 @@ const History = () => {
        <p>Correct Answers: {quiz.correct_answers}</p>
        <p>Score: {quiz.score}</p>
        <p>Total Questions: {quiz.totalQuestions}</p>
-       <p>Type: {quiz.type == "boolean" ? "True/False" : quiz.type}</p>
+       <p>Type: {quiz.type === "boolean" ? "True/False" : quiz.type}</p>
       </StyledCard>
      ))}
     </CardList>

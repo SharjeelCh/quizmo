@@ -56,10 +56,10 @@ const sendToken = asyncHandler(async (req, res) => {
 
  transporter.sendMail(info, (err, data) => {
   if (err) {
-   console.log(err);
+   
    res.status(500).json({ message: "Error sending email" });
   } else {
-   console.log("Email sent");
+   
    res.status(200).json({ message: "Verification email sent" });
   }
  });
@@ -189,10 +189,10 @@ const sendMessage = asyncHandler(async (req, res) => {
  };
  transporter.sendMail(info, (err, data) => {
   if (err) {
-   console.log(err);
+   
    res.status(500).json({ message: "Error sending email" });
   } else {
-   console.log("Email sent");
+   
    res.status(200).json({ message: "Message sent" });
   }
  });

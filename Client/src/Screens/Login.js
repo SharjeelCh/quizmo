@@ -1,6 +1,5 @@
 import React from "react";
 import logo from "../assets/logo.png";
-import { IoLogoGoogle } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -9,7 +8,7 @@ import { styles } from "../Styles/loader";
 import useStore from "../useStore";
 
 function Login() {
- const { user, setUser } = useStore();
+ const {  setUser } = useStore();
  const navigate = useNavigate();
  const mutation = useMutation({
   mutationFn: (data) => {
@@ -23,7 +22,7 @@ function Login() {
     isLogged: true,
    });
    message.success("User logged in successfully");
-   console.log(data.data.data);
+   
    navigate("/");
   },
   onError: (error) => {

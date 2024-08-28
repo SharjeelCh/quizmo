@@ -44,7 +44,7 @@ function QuizPage() {
    try {
     setTypes(quizTypes.quizTypes);
    } catch (error) {
-    console.log(error);
+    
    }
   };
   fetchTypes();

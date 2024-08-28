@@ -4,10 +4,9 @@ import quizTypes from "../JSON/quizTypes.json";
 import serviceTypes from "../JSON/serviceTypes.json";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { type } from "@testing-library/user-event/dist/type";
 import useStore from "../useStore";
 import { Avatar, Button } from "antd";
-import { stringToColor, stringAvatar } from "../Functions/HelperFuncs";
+import {  stringAvatar } from "../Functions/HelperFuncs";
 
 function Tabbar() {
  const [showQuizzesMenu, setShowQuizzesMenu] = useState(false);
@@ -40,7 +39,7 @@ function Tabbar() {
     setTypes(quizTypes.quizTypes);
     setservices(serviceTypes.serviceTypes);
    } catch (error) {
-    console.log(error);
+    
    }
   };
   fetchTypes();
@@ -55,6 +54,7 @@ function Tabbar() {
     >
      <img
       src={logo}
+      alt="error"
       className="w-7 h-7 hidden sm:block md:block lg:block xl:block "
      />
      QuizMo
@@ -119,7 +119,7 @@ function Tabbar() {
           key={index}
           onClick={() => {
            navigate(`/${item}`);
-           console.log("item:", item);
+           
           }}
          >
           {Object.values(item)}

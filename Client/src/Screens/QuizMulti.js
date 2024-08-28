@@ -30,7 +30,7 @@ export const QuizMulti = () => {
    try {
     setTypes(quizTypes2.quizTypes);
    } catch (error) {
-    console.log(error);
+    
    }
   };
   fetchTypes();
@@ -40,7 +40,7 @@ export const QuizMulti = () => {
   if (quizTypes.length > 0 && item) {
    const quizNum = returnQuizTypeNumber(item.quiz_type, quizTypes);
    setCategory(quizNum);
-   console.log(quizNum);
+   
    setQuizType(item.type === "Multi-choice" ? "multiple" : "boolean");
   }
  }, [quizTypes, item]);

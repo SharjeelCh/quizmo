@@ -1,11 +1,9 @@
-import { useTheme } from "@emotion/react";
 import { Button } from "@mui/material";
 import React from "react";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import Typography from "@mui/material/Typography";
 
 const Quiz_Dialog = ({ hide }) => {
- const theme = useTheme();
  const [start, setStart] = React.useState(false);
  const [progress, setProgress] = React.useState(0);
 

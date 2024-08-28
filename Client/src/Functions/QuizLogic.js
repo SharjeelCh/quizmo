@@ -24,6 +24,6 @@ export const scoreLogic = (diificulty, totalQuestions, correctAnswers) => {
  } else if (diificulty === "hard") {
   score = correctAnswers * 7;
  }
- console.log(score);
+ 
  return score;
 };

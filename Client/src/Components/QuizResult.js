@@ -58,7 +58,7 @@ const QuizResult = () => {
  useEffect(() => {
   if (!hasRun.current) {
    hasRun.current = true;
-   console.log("Effect ran");
+   
    mutation.mutate({
     type: quizes[0].type,
     quizType: quizes[0].category,

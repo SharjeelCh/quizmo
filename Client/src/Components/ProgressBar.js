@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function ProgressBar({ totalQs, increase, setincrease }) {
  const [current, setCurrent] = useState(0);
@@ -10,7 +10,7 @@ function ProgressBar({ totalQs, increase, setincrease }) {
  };
 
  useEffect(() => {
-  if (increase == true) {
+  if (increase === true) {
    increment(current);
    setincrease(false);
   }

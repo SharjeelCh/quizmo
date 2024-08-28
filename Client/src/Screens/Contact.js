@@ -11,14 +11,14 @@ const Contact = () => {
  const [showPopper, setShowPopper] = useState(false);
 
  const mutation = useMutation({
-  mutationFn: (data) => {
-   axios.post("http://localhost:5002/api/users/sendMessage", data);
+  mutationFn: async (data) => {
+   await axios.post("http://localhost:5002/api/users/sendMessage", data);
   },
   onSuccess: () => {
    message.success("Message sent successfully. We will get back to you soon");
   },
-  onError: () => {
-   message.error("Failed to send message");
+  onError: (error) => {
+   message.error(error.response?.data?.message || "Failed to send message");
   },
  });
  const handleSubmit = (e) => {
@@ -33,12 +33,13 @@ const Contact = () => {
    message.error("Please fill all the fields");
    return;
   }
+
   if (user.isLogged) mutation.mutate(data);
   else {
    setShowPopper(!showPopper);
   }
  };
- console.log(user);
+
  return (
   <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center mt-2 rounded-t-2xl">
    <div className="w-full max-w-lg p-8 bg-white shadow-md rounded-lg text-center">

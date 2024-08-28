@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState, Suspense, lazy, useMemo } from "react";
 import logo2 from "../assets/logo2.png";
 import quizTypes from "../JSON/quizTypes.json";
 import { truncateText } from "../Functions/HelperFuncs";
@@ -11,28 +11,82 @@ import img4 from "../assets/4.jpg";
 import img5 from "../assets/5.jpg";
 import img6 from "../assets/6.webp";
 import { Spin } from "antd";
-
 const Card = lazy(() => import("../Components/Card"));
 
 function Home() {
  const [types, setTypes] = useState([]);
  const [show, setShow] = useState(false);
+ const [showCards, setShowCards] = useState(false);
  const navigate = useNavigate();
  const { user } = useStore();
+ const [searchQuery, setSearchQuery] = useState("");
 
  useEffect(() => {
   setShow(true);
   const fetchTypes = async () => {
    try {
     setTypes(quizTypes.quizTypes);
-   } catch (error) {
-    console.log(error);
-   }
+   } catch (error) {}
   };
   fetchTypes();
-  const timer = setTimeout(() => setShow(false), 3000);
-  return () => clearTimeout(timer);
+  const timer1 = setTimeout(() => setShow(false), 3000);
+  const timer2 = setTimeout(() => setShowCards(true), 3500);
+  return () => {
+   clearTimeout(timer1);
+   clearTimeout(timer2);
+  };
  }, []);
+
+ const filteredTypes = types.filter((type) => {
+  const lowercasedQuery = searchQuery.toLowerCase().trim();
+  return type.toLowerCase().includes(lowercasedQuery);
+ });
+ console.log(filteredTypes);
+
+ function handleInputChange(event) {
+  setSearchQuery(event.target.value);
+ }
+ const memoizedCards = useMemo(
+  () => (
+   <>
+    <Card
+     text={"General Knowledge"}
+     image={img1}
+     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+    />
+    <Card
+     text={"Science"}
+     image={img2}
+     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+    />
+    <Card
+     text={"Sports"}
+     image={img3}
+     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+    />
+    <Card
+     text={"Animals"}
+     image={img4}
+     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+    />
+    <Card
+     text={"History"}
+     image={img5}
+     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+    />
+    <Card
+     text={"Computers"}
+     image={img6}
+     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+    />
+   </>
+  ),
+  []
+ );
+
+ const handleTypeClick = (item) => {
+  navigate("/QuizPage", { state: item });
+ };
 
  return (
   <div className="flex flex-col">
@@ -163,11 +217,38 @@ function Home() {
      <input
       placeholder="Topic Search"
       className="border-gray-300 border-2 focus:outline-none px-3 py-2 transition-colors"
+      value={searchQuery}
+      onChange={handleInputChange}
      />
      <button className="text-white bg-blue-600 px-2 py-1 rounded ml-2 hover:bg-blue-700 transition-colors">
       Go
      </button>
     </div>
+   </div>
+   <div
+    className={`transition-all duration-600 ease-out overflow-hidden ${
+     searchQuery.length > 0 ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+    }`}
+   >
+    {searchQuery.length > 0 && (
+     <div className="flex flex-col bg-white rounded-md items-start mt-2 p-2">
+      <div className="flex flex-row items-center gap-2">
+       <p className="text-lg font-bold">Search Results for:</p>
+       <p className="text-lg font-semibold">{searchQuery}</p>
+      </div>
+      <div className="flex flex-col items-start gap-1 mt-1">
+       {filteredTypes.map((item, index) => (
+        <button
+         className="text-blue-600 hover:text-blue-900"
+         key={index}
+         onClick={() => handleTypeClick(item)}
+        >
+         {truncateText(Object.values(item), 23)}
+        </button>
+       ))}
+      </div>
+     </div>
+    )}
    </div>
 
    <div className="flex flex-col sm:flex-row bg-white rounded-md items-start mt-2 p-2 gap-5">
@@ -237,46 +318,19 @@ function Home() {
        <p className="text-lg">Click here to get started!</p>
       </div>
      </div>
-     <Suspense
-      fallback={
-       <div className="flex justify-center items-center ">
-        <Spin size="large" style={{ top: 20 }} />
+     {showCards && (
+      <Suspense
+       fallback={
+        <div className="flex justify-center items-center">
+         <Spin size="large" style={{ top: 20 }} />
+        </div>
+       }
+      >
+       <div className="flex flex-row flex-wrap justify-start gap-12">
+        {memoizedCards}
        </div>
-      }
-     >
-      <div className="flex flex-row flex-wrap justify-start gap-12">
-       <Card
-        text={"General Knowledge"}
-        image={img1}
-        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
-       />
-       <Card
-        text={"Science"}
-        image={img2}
-        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
-       />
-       <Card
-        text={"Sports"}
-        image={img3}
-        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
-       />
-       <Card
-        text={"Animals"}
-        image={img4}
-        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
-       />
-       <Card
-        text={"History"}
-        image={img5}
-        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
-       />
-       <Card
-        text={"Computers"}
-        image={img6}
-        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
-       />
-      </div>
-     </Suspense>
+      </Suspense>
+     )}
     </div>
    </div>
    <div className="flex flex-col h-fit bg-white rounded-md items-start mt-2 p-2">

@@ -20,12 +20,11 @@ app.use(cors(corsOptions));
 app.use(
  "/api/users",
  (req, res, next) => {
-  console.log("Request URL:", req.url);
+  
   next();
  },
  userRoutes
 );
 
 app.listen(PORT, () => {
- console.log("Server is running on port: ", PORT);
 });

@@ -1,8 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Tabbar from "../Components/Tabbar";
+import {  Route, Routes } from "react-router-dom";
 import Quizzes from "./Quizzes";
-import Main from "./Main";
 import Home from "./Home";
 import Layout from "./Layout";
 import Login from "./Login";
