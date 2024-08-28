@@ -43,9 +43,7 @@ function QuizPage() {
   const fetchTypes = async () => {
    try {
     setTypes(quizTypes.quizTypes);
-   } catch (error) {
-    
-   }
+   } catch (error) {}
   };
   fetchTypes();
  }, []);
@@ -57,7 +55,7 @@ function QuizPage() {
    <div className="flex sm:flex-row sm:flex-wrap w-full flex-wrap h-fit justify-around gap-10 bg-gradient-to-t from-white to-blue-200 rounded-md sm:rounded-sm md:rounded-md lg:rounded-lg my-2 sm:mt-3 md:mt-3 lg:mt-3 p-1 sm:p-2 md:p-2">
     <div className={`${show ? "animate-slide-from-left" : ""}`}>
      <img
-     src="https://cdn.pixabay.com/photo/2018/01/14/22/59/cartoon-3082809_1280.png"
+      src="https://cdn.pixabay.com/photo/2018/01/14/22/59/cartoon-3082809_1280.png"
       className="w-28 h-28 sm:w-36 md:w-40 lg:w-40 sm:h-36 md:h-40 lg:h-40 rounded-lg"
      />
     </div>
@@ -184,25 +182,26 @@ function QuizPage() {
       >
        {JSON.stringify(item).replace(/"/g, "")}
       </div>
-      {showPopper&&<Popper open={showPopper} setOpen={setShowPopper}/>}
+      {showPopper && <Popper open={showPopper} setOpen={setShowPopper} />}
       <Box
        className="flex flex-col flex-wrap mt-2"
        component={"form"}
        onSubmit={(e) => {
         e.preventDefault();
-        if(user?.isLogged===false){
-          setShowPopper(!showPopper);
+        if (user?.isLogged === false || user?.isLogged === undefined || !user) {
+         setShowPopper(!showPopper);
+        } else {
+         const data = new FormData(e.currentTarget);
+         const inputs = {
+          number_of_qs: data.get("number"),
+          difficulty: data.get("difficulty"),
+          type: data.get("type"),
+          quiz_type: JSON.stringify(item).replace(/"/g, ""),
+         };
+         inputs.number_of_qs
+          ? navigate(`/${inputs.type}`, { state: inputs })
+          : message.error("Please fill in all fields");
         }
-        const data = new FormData(e.currentTarget);
-        const inputs = {
-         number_of_qs: data.get("number"),
-         difficulty: data.get("difficulty"),
-         type: data.get("type"),
-         quiz_type: JSON.stringify(item).replace(/"/g, ""),
-        };
-        inputs.number_of_qs
-         ? navigate(`/${inputs.type}`, { state: inputs })
-         : message.error("Please fill in all fields");
        }}
       >
        <strong className="text-black mb-2 text-wrap">
