@@ -37,7 +37,7 @@ const sendToken = asyncHandler(async (req, res) => {
                     Thank you for signing up, Please verify your account by clicking the button below:
                 </p>
                 <div style="text-align: center; margin: 30px 0;">
-                    <a href="http://localhost:${process.env.PORT}/api/users/verify/${token}" style="background-color: #28A745; color: #fff; padding: 15px 25px; text-decoration: none; font-size: 18px; border-radius: 5px; display: inline-block;">
+                    <a href="https://quizmo-six.vercel.app/api/users/verify/${token}" style="background-color: #28A745; color: #fff; padding: 15px 25px; text-decoration: none; font-size: 18px; border-radius: 5px; display: inline-block;">
                         Verify Account
                     </a>
                 </div>
@@ -45,7 +45,7 @@ const sendToken = asyncHandler(async (req, res) => {
                     Or you can copy and paste the following link into your browser:
                 </p>
                 <p style="color: #007BFF; font-size: 14px; word-break: break-all;">
-                    http://localhost:${process.env.PORT}/api/users/verify/${token}
+                    https://quizmo-six.vercel.app/api/users/verify/${token}
                 </p>
             </div>
             <div style="background-color: #007BFF; padding: 10px; text-align: center;">

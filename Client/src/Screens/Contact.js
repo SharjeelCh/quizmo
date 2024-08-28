@@ -12,7 +12,10 @@ const Contact = () => {
 
  const mutation = useMutation({
   mutationFn: async (data) => {
-   await axios.post("https://quizmo-six.vercel.app/api/users/sendMessage", data);
+   await axios.post(
+    "https://quizmo-six.vercel.app/api/users/sendMessage",
+    data
+   );
   },
   onSuccess: () => {
    message.success("Message sent successfully. We will get back to you soon");
@@ -34,7 +37,7 @@ const Contact = () => {
    return;
   }
 
-  if (user.isLogged) mutation.mutate(data);
+  if (user?.isLogged) mutation.mutate(data);
   else {
    setShowPopper(!showPopper);
   }
@@ -54,7 +57,7 @@ const Contact = () => {
       <input
        type="email"
        name="email"
-       {...(user.isLogged && { value: user.email })}
+       {...(user?.isLogged && { value: user.email })}
        readOnly={user?.isLogged && true}
        placeholder="Enter a valid email address"
        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
@@ -62,7 +65,7 @@ const Contact = () => {
       <input
        type="text"
        name="name"
-       {...(user.isLogged && { value: user.username })}
+       {...(user?.isLogged && { value: user.username })}
        readOnly={user?.isLogged && true}
        placeholder="Enter your Name"
        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"

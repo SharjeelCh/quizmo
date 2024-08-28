@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
- origin: ["http://localhost:3000","https://vercel.com/sharjeel-fida-chs-projects/quizmo-1sty"],
+ origin: ["http://localhost:3000", "https://quizmo-1sty.vercel.app"],
  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
  allowedHeaders: ["Content-Type", "Authorization"],
  credentials: true,
@@ -20,11 +20,9 @@ app.use(cors(corsOptions));
 app.use(
  "/api/users",
  (req, res, next) => {
-  
   next();
  },
  userRoutes
 );
 
-app.listen(PORT, () => {
-});
+app.listen(PORT, () => {});
